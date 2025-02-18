@@ -1,0 +1,14 @@
+2025-02-18 12:08:38,847 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 12:09:00,592 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 12:09:28,755 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 12:22:05,321 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 12:29:15,062 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 12:29:16,245 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 12:30:49,876 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 12:30:51,058 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 12:31:00,603 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-18 12:31:00,604 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-18 12:31:00,604 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-18 12:31:46,698 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-18 12:31:46,698 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-18 12:31:46,698 - AlertManagerLogger - INFO - No alerts triggered.
