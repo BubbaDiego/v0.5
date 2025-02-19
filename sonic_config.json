@@ -156,7 +156,7 @@
     },
     "travel_percent_liquid_ranges": {
       "enabled": false,
-      "low": -40.0,
+      "low": -10.0,
       "low_notifications": {
         "call": false,
         "sms": false,
@@ -234,7 +234,7 @@
   "alert_cooldown_seconds": 6000,
   "call_refractory_period": 1,
   "theme_config": {
-    "selected_profile": "profile1",
+    "selected_profile": "profile4",
     "profiles": {
       "profile1": {
         "title_bar": {
@@ -340,7 +340,7 @@
   },
   "twilio_config": {
     "account_sid": "ACb606788ada5dccbfeeebed0f440099b3",
-    "auth_token": "804986d74dd780736217c0107b0c8882",
+    "auth_token": "ae4c7cc652d48caab2f2752699a6c4bd",
     "flow_sid": "FW5b3bf49ee04af4d23a118b613bbc0df2",
     "to_phone": "+16199804758",
     "from_phone": "+18336913467"

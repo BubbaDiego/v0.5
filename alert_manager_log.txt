@@ -35,3 +35,1395 @@
 2025-02-18 17:34:41,601 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
 2025-02-18 17:34:41,601 - AlertManagerLogger - INFO - Found 0 active price alerts.
 2025-02-18 17:34:41,601 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-18 17:46:05,408 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 17:46:06,067 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 17:54:00,215 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-18 17:54:00,215 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-18 17:54:00,215 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-18 17:57:30,989 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 17:57:35,182 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-18 17:57:35,182 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-18 17:57:35,182 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-18 17:58:25,158 - AlertManagerLogger - DEBUG - Loaded config: {'price_config': {'assets': ['BTC', 'ETH', 'SOL'], 'currency': 'USD', 'cmc_api_key': 'c51c0c22-1bf3-4674-86bf-36f39a912d1a'}, 'system_config': {'logging_enabled': True, 'log_level': 'DEBUG', 'console_output': True, 'log_file': 'C:/space_ship/price_monitor.log', 'db_path': 'C:/space_ship/mother_brain.db', 'price_monitor_enabled': True, 'alert_monitor_enabled': True, 'sonic_monitor_loop_time': 300, 'last_price_update_time': None}, 'api_config': {'coingecko_api_enabled': 'ENABLE', 'kucoin_api_enabled': 'ENABLE', 'coinmarketcap_api_enabled': 'ENABLE', 'coinpaprika_api_enabled': 'ENABLE', 'binance_api_enabled': 'ENABLE', 'coinmarketcap_api_key': 'c51c0c22-1bf3-4674-86bf-36f39a912d1a'}, 'alert_ranges': {'heat_index_ranges': {'enabled': False, 'low': 444.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium': 444.0, 'high': 777.0, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'collateral_ranges': {'enabled': False, 'low': 1111.0, 'medium': 1111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'value_ranges': {'enabled': False, 'low': 1111.0, 'medium': 1111.0, 'high': 1111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'size_ranges': {'enabled': False, 'low': 11111.0, 'medium': 111111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'leverage_ranges': {'enabled': False, 'low': 11111.0, 'medium': 111111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'liquidation_distance_ranges': {'enabled': False, 'low': 1111111.0, 'medium': 111111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'travel_percent_liquid_ranges': {'enabled': False, 'low': -40.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium': -60.0, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high': -75.0, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'travel_percent_profit_ranges': {'enabled': True, 'low': -50.0, 'medium': -75.0, 'high': -85.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'profit_ranges': {'enabled': True, 'low': 46.0, 'low_notifications': {'call': True, 'sms': True, 'email': True}, 'medium': 101.3, 'medium_notifications': {'call': True, 'sms': True, 'email': True}, 'high': 202.0, 'high_notifications': {'call': True, 'sms': True, 'email': True}}}, 'notification_config': {'email': {'smtp_server': 'smtp.gmail.com', 'smtp_port': 587, 'smtp_user': 'bubba.diego@gmail.com', 'smtp_password': 'pzix taan afbe igxb', 'recipient_email': 'bubba.diego@gmail.com'}, 'sms': {'carrier_gateway': 'txt.att.net', 'recipient_number': '6199804758'}}, 'alert_cooldown_seconds': 6000, 'call_refractory_period': 1, 'theme_config': {'selected_profile': 'profile4', 'profiles': {'profile1': {'title_bar': {'color': '#FF5733', 'image': 'static/images/alert_wall.jpg'}, 'side_bar': {'color': '#C70039', 'image': None}, 'wallpaper': {'color': '#900C3F', 'image': 'static/images/alert_wall.jpg'}, 'primary': {'color': '#581845', 'image': None}, 'secondary': {'color': '#FFC300', 'image': None}, 'text': {'color': '#FFFFFF'}}, 'profile2': {'title_bar': {'color': '#007BFF', 'image': None}, 'side_bar': {'color': '#6C757D', 'image': None}, 'wallpaper': {'color': '#F8F9FA', 'image': 'static/images/alert_wall.jpg'}, 'primary': {'color': '#28A745', 'image': None}, 'secondary': {'color': '#17A2B8', 'image': None}, 'text': {'color': '#212529'}}, 'profile3': {'title_bar': {'color': '#343A40', 'image': None}, 'side_bar': {'color': '#495057', 'image': None}, 'wallpaper': {'color': '#E9ECEF', 'image': None}, 'primary': {'color': '#007BFF', 'image': None}, 'secondary': {'color': '#6C757D', 'image': None}, 'text': {'color': '#FFFFFF'}}, 'profile4': {'title_bar': {'color': '#28A745', 'image': None}, 'side_bar': {'color': '#17A2B8', 'image': None}, 'wallpaper': {'color': '#F8F9FA', 'image': None}, 'primary': {'color': '#FFC107', 'image': None}, 'secondary': {'color': '#DC3545', 'image': None}, 'text': {'color': '#212529'}}}}, 'twilio_config': {'account_sid': 'ACb606788ada5dccbfeeebed0f440099b3', 'auth_token': '804986d74dd780736217c0107b0c8882', 'flow_sid': 'FW5b3bf49ee04af4d23a118b613bbc0df2', 'to_phone': '+16199804758', 'from_phone': '+18336913467'}}
+2025-02-18 18:04:51,576 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 18:04:52,477 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 18:09:30,719 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 18:09:31,315 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 18:12:16,694 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 18:12:17,319 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 18:12:39,400 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 18:12:40,035 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 18:40:56,407 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-18 18:40:56,410 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-18 18:40:56,411 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-18 18:51:57,911 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-18 18:51:57,911 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-18 18:51:57,911 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-18 18:58:18,646 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-18 18:58:18,647 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-18 18:58:18,647 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-18 19:42:06,393 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-18 19:42:06,393 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-18 19:42:06,393 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-18 19:42:23,097 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-18 19:42:23,098 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-18 19:42:23,098 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-18 20:01:20,287 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-18 20:01:20,287 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-18 20:01:20,287 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-18 20:06:04,423 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-18 20:06:04,423 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-18 20:06:04,423 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-18 21:13:15,749 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 21:13:16,437 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-18 21:13:28,742 - AlertManagerLogger - DEBUG - Loaded config: {'price_config': {'assets': ['BTC', 'ETH', 'SOL'], 'currency': 'USD', 'cmc_api_key': 'c51c0c22-1bf3-4674-86bf-36f39a912d1a'}, 'system_config': {'logging_enabled': True, 'log_level': 'DEBUG', 'console_output': True, 'log_file': 'C:/space_ship/price_monitor.log', 'db_path': 'C:/space_ship/mother_brain.db', 'price_monitor_enabled': True, 'alert_monitor_enabled': True, 'sonic_monitor_loop_time': 300, 'last_price_update_time': None}, 'api_config': {'coingecko_api_enabled': 'ENABLE', 'kucoin_api_enabled': 'ENABLE', 'coinmarketcap_api_enabled': 'ENABLE', 'coinpaprika_api_enabled': 'ENABLE', 'binance_api_enabled': 'ENABLE', 'coinmarketcap_api_key': 'c51c0c22-1bf3-4674-86bf-36f39a912d1a'}, 'alert_ranges': {'heat_index_ranges': {'enabled': False, 'low': 444.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium': 444.0, 'high': 777.0, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'collateral_ranges': {'enabled': False, 'low': 1111.0, 'medium': 1111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'value_ranges': {'enabled': False, 'low': 1111.0, 'medium': 1111.0, 'high': 1111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'size_ranges': {'enabled': False, 'low': 11111.0, 'medium': 111111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'leverage_ranges': {'enabled': False, 'low': 11111.0, 'medium': 111111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'liquidation_distance_ranges': {'enabled': False, 'low': 1111111.0, 'medium': 111111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'travel_percent_liquid_ranges': {'enabled': False, 'low': -40.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium': -60.0, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high': -75.0, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'travel_percent_profit_ranges': {'enabled': True, 'low': -50.0, 'medium': -75.0, 'high': -85.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'profit_ranges': {'enabled': True, 'low': 46.0, 'low_notifications': {'call': True, 'sms': True, 'email': True}, 'medium': 101.3, 'medium_notifications': {'call': True, 'sms': True, 'email': True}, 'high': 202.0, 'high_notifications': {'call': True, 'sms': True, 'email': True}}}, 'notification_config': {'email': {'smtp_server': 'smtp.gmail.com', 'smtp_port': 587, 'smtp_user': 'bubba.diego@gmail.com', 'smtp_password': 'pzix taan afbe igxb', 'recipient_email': 'bubba.diego@gmail.com'}, 'sms': {'carrier_gateway': 'txt.att.net', 'recipient_number': '6199804758'}}, 'alert_cooldown_seconds': 6000, 'call_refractory_period': 1, 'theme_config': {'selected_profile': 'profile2', 'profiles': {'profile1': {'title_bar': {'color': '#FF5733', 'image': 'static/images/alert_wall.jpg'}, 'side_bar': {'color': '#C70039', 'image': None}, 'wallpaper': {'color': '#900C3F', 'image': 'static/images/alert_wall.jpg'}, 'primary': {'color': '#581845', 'image': None}, 'secondary': {'color': '#FFC300', 'image': None}, 'text': {'color': '#FFFFFF'}}, 'profile2': {'title_bar': {'color': '#007BFF', 'image': None}, 'side_bar': {'color': '#6C757D', 'image': None}, 'wallpaper': {'color': '#F8F9FA', 'image': 'static/images/alert_wall.jpg'}, 'primary': {'color': '#28A745', 'image': None}, 'secondary': {'color': '#17A2B8', 'image': None}, 'text': {'color': '#212529'}}, 'profile3': {'title_bar': {'color': '#343A40', 'image': None}, 'side_bar': {'color': '#495057', 'image': None}, 'wallpaper': {'color': '#E9ECEF', 'image': None}, 'primary': {'color': '#007BFF', 'image': None}, 'secondary': {'color': '#6C757D', 'image': None}, 'text': {'color': '#FFFFFF'}}, 'profile4': {'title_bar': {'color': '#28A745', 'image': None}, 'side_bar': {'color': '#17A2B8', 'image': None}, 'wallpaper': {'color': '#F8F9FA', 'image': None}, 'primary': {'color': '#FFC107', 'image': None}, 'secondary': {'color': '#DC3545', 'image': None}, 'text': {'color': '#212529'}}}}, 'twilio_config': {'account_sid': 'ACb606788ada5dccbfeeebed0f440099b3', 'auth_token': 'ae4c7cc652d48caab2f2752699a6c4bd', 'flow_sid': 'FW5b3bf49ee04af4d23a118b613bbc0df2', 'to_phone': '+16199804758', 'from_phone': '+18336913467'}}
+2025-02-18 21:13:40,759 - AlertManagerLogger - DEBUG - POST Data Received:
+{
+  "alert_ranges[profit_ranges][enabled]": [
+    "false",
+    "true"
+  ],
+  "alert_ranges[profit_ranges][low]": [
+    "46.0"
+  ],
+  "alert_ranges[profit_ranges][low_notifications][call]": [
+    "false",
+    "true"
+  ],
+  "alert_ranges[profit_ranges][low_notifications][sms]": [
+    "false",
+    "true"
+  ],
+  "alert_ranges[profit_ranges][low_notifications][email]": [
+    "false",
+    "true"
+  ],
+  "alert_ranges[profit_ranges][medium]": [
+    "101.3"
+  ],
+  "alert_ranges[profit_ranges][medium_notifications][call]": [
+    "false",
+    "true"
+  ],
+  "alert_ranges[profit_ranges][medium_notifications][sms]": [
+    "false",
+    "true"
+  ],
+  "alert_ranges[profit_ranges][medium_notifications][email]": [
+    "false",
+    "true"
+  ],
+  "alert_ranges[profit_ranges][high]": [
+    "202.0"
+  ],
+  "alert_ranges[profit_ranges][high_notifications][call]": [
+    "false",
+    "true"
+  ],
+  "alert_ranges[profit_ranges][high_notifications][sms]": [
+    "false",
+    "true"
+  ],
+  "alert_ranges[profit_ranges][high_notifications][email]": [
+    "false",
+    "true"
+  ],
+  "alert_ranges[travel_percent_profit_ranges][enabled]": [
+    "false",
+    "true"
+  ],
+  "alert_ranges[travel_percent_profit_ranges][low]": [
+    "-50.0"
+  ],
+  "alert_ranges[travel_percent_profit_ranges][low_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_profit_ranges][low_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_profit_ranges][low_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_profit_ranges][medium]": [
+    "-75.0"
+  ],
+  "alert_ranges[travel_percent_profit_ranges][medium_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_profit_ranges][medium_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_profit_ranges][medium_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_profit_ranges][high]": [
+    "-85.0"
+  ],
+  "alert_ranges[travel_percent_profit_ranges][high_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_profit_ranges][high_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_profit_ranges][high_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_liquid_ranges][enabled]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_liquid_ranges][low]": [
+    "-10.0"
+  ],
+  "alert_ranges[travel_percent_liquid_ranges][low_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_liquid_ranges][low_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_liquid_ranges][low_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_liquid_ranges][medium]": [
+    "-60.0"
+  ],
+  "alert_ranges[travel_percent_liquid_ranges][medium_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_liquid_ranges][medium_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_liquid_ranges][medium_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_liquid_ranges][high]": [
+    "-75.0"
+  ],
+  "alert_ranges[travel_percent_liquid_ranges][high_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_liquid_ranges][high_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[travel_percent_liquid_ranges][high_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[liquidation_distance_ranges][enabled]": [
+    "false"
+  ],
+  "alert_ranges[liquidation_distance_ranges][low]": [
+    "1111111.0"
+  ],
+  "alert_ranges[liquidation_distance_ranges][low_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[liquidation_distance_ranges][low_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[liquidation_distance_ranges][low_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[liquidation_distance_ranges][medium]": [
+    "111111.0"
+  ],
+  "alert_ranges[liquidation_distance_ranges][medium_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[liquidation_distance_ranges][medium_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[liquidation_distance_ranges][medium_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[liquidation_distance_ranges][high]": [
+    "11111.0"
+  ],
+  "alert_ranges[liquidation_distance_ranges][high_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[liquidation_distance_ranges][high_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[liquidation_distance_ranges][high_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[leverage_ranges][enabled]": [
+    "false"
+  ],
+  "alert_ranges[leverage_ranges][low]": [
+    "11111.0"
+  ],
+  "alert_ranges[leverage_ranges][low_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[leverage_ranges][low_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[leverage_ranges][low_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[leverage_ranges][medium]": [
+    "111111.0"
+  ],
+  "alert_ranges[leverage_ranges][medium_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[leverage_ranges][medium_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[leverage_ranges][medium_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[leverage_ranges][high]": [
+    "11111.0"
+  ],
+  "alert_ranges[leverage_ranges][high_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[leverage_ranges][high_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[leverage_ranges][high_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[size_ranges][enabled]": [
+    "false"
+  ],
+  "alert_ranges[size_ranges][low]": [
+    "11111.0"
+  ],
+  "alert_ranges[size_ranges][low_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[size_ranges][low_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[size_ranges][low_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[size_ranges][medium]": [
+    "111111.0"
+  ],
+  "alert_ranges[size_ranges][medium_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[size_ranges][medium_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[size_ranges][medium_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[size_ranges][high]": [
+    "11111.0"
+  ],
+  "alert_ranges[size_ranges][high_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[size_ranges][high_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[size_ranges][high_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[value_ranges][enabled]": [
+    "false"
+  ],
+  "alert_ranges[value_ranges][low]": [
+    "1111.0"
+  ],
+  "alert_ranges[value_ranges][low_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[value_ranges][low_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[value_ranges][low_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[value_ranges][medium]": [
+    "1111.0"
+  ],
+  "alert_ranges[value_ranges][medium_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[value_ranges][medium_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[value_ranges][medium_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[value_ranges][high]": [
+    "1111.0"
+  ],
+  "alert_ranges[value_ranges][high_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[value_ranges][high_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[value_ranges][high_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[collateral_ranges][enabled]": [
+    "false"
+  ],
+  "alert_ranges[collateral_ranges][low]": [
+    "1111.0"
+  ],
+  "alert_ranges[collateral_ranges][low_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[collateral_ranges][low_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[collateral_ranges][low_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[collateral_ranges][medium]": [
+    "1111.0"
+  ],
+  "alert_ranges[collateral_ranges][medium_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[collateral_ranges][medium_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[collateral_ranges][medium_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[collateral_ranges][high]": [
+    "11111.0"
+  ],
+  "alert_ranges[collateral_ranges][high_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[collateral_ranges][high_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[collateral_ranges][high_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[heat_index_ranges][enabled]": [
+    "false"
+  ],
+  "alert_ranges[heat_index_ranges][low]": [
+    "444.0"
+  ],
+  "alert_ranges[heat_index_ranges][low_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[heat_index_ranges][low_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[heat_index_ranges][low_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[heat_index_ranges][medium]": [
+    "444.0"
+  ],
+  "alert_ranges[heat_index_ranges][medium_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[heat_index_ranges][medium_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[heat_index_ranges][medium_notifications][email]": [
+    "false"
+  ],
+  "alert_ranges[heat_index_ranges][high]": [
+    "777.0"
+  ],
+  "alert_ranges[heat_index_ranges][high_notifications][call]": [
+    "false"
+  ],
+  "alert_ranges[heat_index_ranges][high_notifications][sms]": [
+    "false"
+  ],
+  "alert_ranges[heat_index_ranges][high_notifications][email]": [
+    "false"
+  ]
+}
+2025-02-18 21:13:40,760 - AlertManagerLogger - DEBUG - Parsed Nested Form Data (raw):
+{
+  "profit_ranges": {
+    "enabled": true,
+    "low": 46.0,
+    "low_notifications": {
+      "call": true,
+      "sms": true,
+      "email": true
+    },
+    "medium": 101.3,
+    "medium_notifications": {
+      "call": true,
+      "sms": true,
+      "email": true
+    },
+    "high": 202.0,
+    "high_notifications": {
+      "call": true,
+      "sms": true,
+      "email": true
+    }
+  },
+  "travel_percent_profit_ranges": {
+    "enabled": true,
+    "low": -50.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": -75.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": -85.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  },
+  "travel_percent_liquid_ranges": {
+    "enabled": false,
+    "low": -10.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": -60.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": -75.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  },
+  "liquidation_distance_ranges": {
+    "enabled": false,
+    "low": 1111111.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": 111111.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": 11111.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  },
+  "leverage_ranges": {
+    "enabled": false,
+    "low": 11111.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": 111111.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": 11111.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  },
+  "size_ranges": {
+    "enabled": false,
+    "low": 11111.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": 111111.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": 11111.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  },
+  "value_ranges": {
+    "enabled": false,
+    "low": 1111.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": 1111.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": 1111.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  },
+  "collateral_ranges": {
+    "enabled": false,
+    "low": 1111.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": 1111.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": 11111.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  },
+  "heat_index_ranges": {
+    "enabled": false,
+    "low": 444.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": 444.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": 777.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  }
+}
+2025-02-18 21:13:40,760 - AlertManagerLogger - DEBUG - Parsed Nested Form Data (converted):
+{
+  "profit_ranges": {
+    "enabled": true,
+    "low": 46.0,
+    "low_notifications": {
+      "call": true,
+      "sms": true,
+      "email": true
+    },
+    "medium": 101.3,
+    "medium_notifications": {
+      "call": true,
+      "sms": true,
+      "email": true
+    },
+    "high": 202.0,
+    "high_notifications": {
+      "call": true,
+      "sms": true,
+      "email": true
+    }
+  },
+  "travel_percent_profit_ranges": {
+    "enabled": true,
+    "low": -50.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": -75.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": -85.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  },
+  "travel_percent_liquid_ranges": {
+    "enabled": false,
+    "low": -10.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": -60.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": -75.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  },
+  "liquidation_distance_ranges": {
+    "enabled": false,
+    "low": 1111111.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": 111111.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": 11111.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  },
+  "leverage_ranges": {
+    "enabled": false,
+    "low": 11111.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": 111111.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": 11111.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  },
+  "size_ranges": {
+    "enabled": false,
+    "low": 11111.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": 111111.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": 11111.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  },
+  "value_ranges": {
+    "enabled": false,
+    "low": 1111.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": 1111.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": 1111.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  },
+  "collateral_ranges": {
+    "enabled": false,
+    "low": 1111.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": 1111.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": 11111.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  },
+  "heat_index_ranges": {
+    "enabled": false,
+    "low": 444.0,
+    "low_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "medium": 444.0,
+    "medium_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    },
+    "high": 777.0,
+    "high_notifications": {
+      "call": false,
+      "sms": false,
+      "email": false
+    }
+  }
+}
+2025-02-18 21:13:40,760 - AlertManagerLogger - DEBUG - Loaded config: {'price_config': {'assets': ['BTC', 'ETH', 'SOL'], 'currency': 'USD', 'cmc_api_key': 'c51c0c22-1bf3-4674-86bf-36f39a912d1a'}, 'system_config': {'logging_enabled': True, 'log_level': 'DEBUG', 'console_output': True, 'log_file': 'C:/space_ship/price_monitor.log', 'db_path': 'C:/space_ship/mother_brain.db', 'price_monitor_enabled': True, 'alert_monitor_enabled': True, 'sonic_monitor_loop_time': 300, 'last_price_update_time': None}, 'api_config': {'coingecko_api_enabled': 'ENABLE', 'kucoin_api_enabled': 'ENABLE', 'coinmarketcap_api_enabled': 'ENABLE', 'coinpaprika_api_enabled': 'ENABLE', 'binance_api_enabled': 'ENABLE', 'coinmarketcap_api_key': 'c51c0c22-1bf3-4674-86bf-36f39a912d1a'}, 'alert_ranges': {'heat_index_ranges': {'enabled': False, 'low': 444.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium': 444.0, 'high': 777.0, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'collateral_ranges': {'enabled': False, 'low': 1111.0, 'medium': 1111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'value_ranges': {'enabled': False, 'low': 1111.0, 'medium': 1111.0, 'high': 1111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'size_ranges': {'enabled': False, 'low': 11111.0, 'medium': 111111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'leverage_ranges': {'enabled': False, 'low': 11111.0, 'medium': 111111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'liquidation_distance_ranges': {'enabled': False, 'low': 1111111.0, 'medium': 111111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'travel_percent_liquid_ranges': {'enabled': False, 'low': -40.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium': -60.0, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high': -75.0, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'travel_percent_profit_ranges': {'enabled': True, 'low': -50.0, 'medium': -75.0, 'high': -85.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'profit_ranges': {'enabled': True, 'low': 46.0, 'low_notifications': {'call': True, 'sms': True, 'email': True}, 'medium': 101.3, 'medium_notifications': {'call': True, 'sms': True, 'email': True}, 'high': 202.0, 'high_notifications': {'call': True, 'sms': True, 'email': True}}}, 'notification_config': {'email': {'smtp_server': 'smtp.gmail.com', 'smtp_port': 587, 'smtp_user': 'bubba.diego@gmail.com', 'smtp_password': 'pzix taan afbe igxb', 'recipient_email': 'bubba.diego@gmail.com'}, 'sms': {'carrier_gateway': 'txt.att.net', 'recipient_number': '6199804758'}}, 'alert_cooldown_seconds': 6000, 'call_refractory_period': 1, 'theme_config': {'selected_profile': 'profile2', 'profiles': {'profile1': {'title_bar': {'color': '#FF5733', 'image': 'static/images/alert_wall.jpg'}, 'side_bar': {'color': '#C70039', 'image': None}, 'wallpaper': {'color': '#900C3F', 'image': 'static/images/alert_wall.jpg'}, 'primary': {'color': '#581845', 'image': None}, 'secondary': {'color': '#FFC300', 'image': None}, 'text': {'color': '#FFFFFF'}}, 'profile2': {'title_bar': {'color': '#007BFF', 'image': None}, 'side_bar': {'color': '#6C757D', 'image': None}, 'wallpaper': {'color': '#F8F9FA', 'image': 'static/images/alert_wall.jpg'}, 'primary': {'color': '#28A745', 'image': None}, 'secondary': {'color': '#17A2B8', 'image': None}, 'text': {'color': '#212529'}}, 'profile3': {'title_bar': {'color': '#343A40', 'image': None}, 'side_bar': {'color': '#495057', 'image': None}, 'wallpaper': {'color': '#E9ECEF', 'image': None}, 'primary': {'color': '#007BFF', 'image': None}, 'secondary': {'color': '#6C757D', 'image': None}, 'text': {'color': '#FFFFFF'}}, 'profile4': {'title_bar': {'color': '#28A745', 'image': None}, 'side_bar': {'color': '#17A2B8', 'image': None}, 'wallpaper': {'color': '#F8F9FA', 'image': None}, 'primary': {'color': '#FFC107', 'image': None}, 'secondary': {'color': '#DC3545', 'image': None}, 'text': {'color': '#212529'}}}}, 'twilio_config': {'account_sid': 'ACb606788ada5dccbfeeebed0f440099b3', 'auth_token': 'ae4c7cc652d48caab2f2752699a6c4bd', 'flow_sid': 'FW5b3bf49ee04af4d23a118b613bbc0df2', 'to_phone': '+16199804758', 'from_phone': '+18336913467'}}
+2025-02-18 21:13:40,760 - AlertManagerLogger - DEBUG - Existing alert config: {'heat_index_ranges': {'enabled': False, 'low': 444.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium': 444.0, 'high': 777.0, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'collateral_ranges': {'enabled': False, 'low': 1111.0, 'medium': 1111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'value_ranges': {'enabled': False, 'low': 1111.0, 'medium': 1111.0, 'high': 1111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'size_ranges': {'enabled': False, 'low': 11111.0, 'medium': 111111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'leverage_ranges': {'enabled': False, 'low': 11111.0, 'medium': 111111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'liquidation_distance_ranges': {'enabled': False, 'low': 1111111.0, 'medium': 111111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'travel_percent_liquid_ranges': {'enabled': False, 'low': -40.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium': -60.0, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high': -75.0, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'travel_percent_profit_ranges': {'enabled': True, 'low': -50.0, 'medium': -75.0, 'high': -85.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'profit_ranges': {'enabled': True, 'low': 46.0, 'low_notifications': {'call': True, 'sms': True, 'email': True}, 'medium': 101.3, 'medium_notifications': {'call': True, 'sms': True, 'email': True}, 'high': 202.0, 'high_notifications': {'call': True, 'sms': True, 'email': True}}}
+2025-02-18 21:13:40,760 - AlertManagerLogger - DEBUG - Deep merging key: profit_ranges
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: enabled with value: True
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: low with value: 46.0
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Deep merging key: low_notifications
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: call with value: True
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: sms with value: True
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: email with value: True
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: medium with value: 101.3
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Deep merging key: medium_notifications
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: call with value: True
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: sms with value: True
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: email with value: True
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: high with value: 202.0
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Deep merging key: high_notifications
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: call with value: True
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: sms with value: True
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: email with value: True
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Deep merging key: travel_percent_profit_ranges
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: enabled with value: True
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: low with value: -50.0
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Deep merging key: low_notifications
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: medium with value: -75.0
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Deep merging key: medium_notifications
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Updating key: high with value: -85.0
+2025-02-18 21:13:40,761 - AlertManagerLogger - DEBUG - Deep merging key: high_notifications
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Deep merging key: travel_percent_liquid_ranges
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: enabled with value: False
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: low with value: -10.0
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Deep merging key: low_notifications
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: medium with value: -60.0
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Deep merging key: medium_notifications
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: high with value: -75.0
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Deep merging key: high_notifications
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Deep merging key: liquidation_distance_ranges
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: enabled with value: False
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: low with value: 1111111.0
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Deep merging key: low_notifications
+2025-02-18 21:13:40,762 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: medium with value: 111111.0
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Deep merging key: medium_notifications
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: high with value: 11111.0
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Deep merging key: high_notifications
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Deep merging key: leverage_ranges
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: enabled with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: low with value: 11111.0
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Deep merging key: low_notifications
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: medium with value: 111111.0
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Deep merging key: medium_notifications
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,763 - AlertManagerLogger - DEBUG - Updating key: high with value: 11111.0
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Deep merging key: high_notifications
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Deep merging key: size_ranges
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: enabled with value: False
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: low with value: 11111.0
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Deep merging key: low_notifications
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: medium with value: 111111.0
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Deep merging key: medium_notifications
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: high with value: 11111.0
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Deep merging key: high_notifications
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Deep merging key: value_ranges
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: enabled with value: False
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: low with value: 1111.0
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Deep merging key: low_notifications
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,764 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: medium with value: 1111.0
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Deep merging key: medium_notifications
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: high with value: 1111.0
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Deep merging key: high_notifications
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Deep merging key: collateral_ranges
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: enabled with value: False
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: low with value: 1111.0
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Deep merging key: low_notifications
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: medium with value: 1111.0
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Deep merging key: medium_notifications
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Updating key: high with value: 11111.0
+2025-02-18 21:13:40,765 - AlertManagerLogger - DEBUG - Deep merging key: high_notifications
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Deep merging key: heat_index_ranges
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: enabled with value: False
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: low with value: 444.0
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Deep merging key: low_notifications
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: medium with value: 444.0
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Deep merging key: medium_notifications
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: high with value: 777.0
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Deep merging key: high_notifications
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: call with value: False
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: sms with value: False
+2025-02-18 21:13:40,766 - AlertManagerLogger - DEBUG - Updating key: email with value: False
+2025-02-18 21:13:40,768 - AlertManagerLogger - INFO - Configuration saved to C:\v0.5\sonic_config.json
+2025-02-18 21:13:40,768 - AlertManagerLogger - INFO - Alert configuration updated successfully.
+2025-02-18 21:13:40,776 - AlertManagerLogger - DEBUG - Loaded config: {'price_config': {'assets': ['BTC', 'ETH', 'SOL'], 'currency': 'USD', 'cmc_api_key': 'c51c0c22-1bf3-4674-86bf-36f39a912d1a'}, 'system_config': {'logging_enabled': True, 'log_level': 'DEBUG', 'console_output': True, 'log_file': 'C:/space_ship/price_monitor.log', 'db_path': 'C:/space_ship/mother_brain.db', 'price_monitor_enabled': True, 'alert_monitor_enabled': True, 'sonic_monitor_loop_time': 300, 'last_price_update_time': None}, 'api_config': {'coingecko_api_enabled': 'ENABLE', 'kucoin_api_enabled': 'ENABLE', 'coinmarketcap_api_enabled': 'ENABLE', 'coinpaprika_api_enabled': 'ENABLE', 'binance_api_enabled': 'ENABLE', 'coinmarketcap_api_key': 'c51c0c22-1bf3-4674-86bf-36f39a912d1a'}, 'alert_ranges': {'heat_index_ranges': {'enabled': False, 'low': 444.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium': 444.0, 'high': 777.0, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'collateral_ranges': {'enabled': False, 'low': 1111.0, 'medium': 1111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'value_ranges': {'enabled': False, 'low': 1111.0, 'medium': 1111.0, 'high': 1111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'size_ranges': {'enabled': False, 'low': 11111.0, 'medium': 111111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'leverage_ranges': {'enabled': False, 'low': 11111.0, 'medium': 111111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'liquidation_distance_ranges': {'enabled': False, 'low': 1111111.0, 'medium': 111111.0, 'high': 11111.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'travel_percent_liquid_ranges': {'enabled': False, 'low': -10.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium': -60.0, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high': -75.0, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'travel_percent_profit_ranges': {'enabled': True, 'low': -50.0, 'medium': -75.0, 'high': -85.0, 'low_notifications': {'call': False, 'sms': False, 'email': False}, 'medium_notifications': {'call': False, 'sms': False, 'email': False}, 'high_notifications': {'call': False, 'sms': False, 'email': False}}, 'profit_ranges': {'enabled': True, 'low': 46.0, 'low_notifications': {'call': True, 'sms': True, 'email': True}, 'medium': 101.3, 'medium_notifications': {'call': True, 'sms': True, 'email': True}, 'high': 202.0, 'high_notifications': {'call': True, 'sms': True, 'email': True}}}, 'notification_config': {'email': {'smtp_server': 'smtp.gmail.com', 'smtp_port': 587, 'smtp_user': 'bubba.diego@gmail.com', 'smtp_password': 'pzix taan afbe igxb', 'recipient_email': 'bubba.diego@gmail.com'}, 'sms': {'carrier_gateway': 'txt.att.net', 'recipient_number': '6199804758'}}, 'alert_cooldown_seconds': 6000, 'call_refractory_period': 1, 'theme_config': {'selected_profile': 'profile2', 'profiles': {'profile1': {'title_bar': {'color': '#FF5733', 'image': 'static/images/alert_wall.jpg'}, 'side_bar': {'color': '#C70039', 'image': None}, 'wallpaper': {'color': '#900C3F', 'image': 'static/images/alert_wall.jpg'}, 'primary': {'color': '#581845', 'image': None}, 'secondary': {'color': '#FFC300', 'image': None}, 'text': {'color': '#FFFFFF'}}, 'profile2': {'title_bar': {'color': '#007BFF', 'image': None}, 'side_bar': {'color': '#6C757D', 'image': None}, 'wallpaper': {'color': '#F8F9FA', 'image': 'static/images/alert_wall.jpg'}, 'primary': {'color': '#28A745', 'image': None}, 'secondary': {'color': '#17A2B8', 'image': None}, 'text': {'color': '#212529'}}, 'profile3': {'title_bar': {'color': '#343A40', 'image': None}, 'side_bar': {'color': '#495057', 'image': None}, 'wallpaper': {'color': '#E9ECEF', 'image': None}, 'primary': {'color': '#007BFF', 'image': None}, 'secondary': {'color': '#6C757D', 'image': None}, 'text': {'color': '#FFFFFF'}}, 'profile4': {'title_bar': {'color': '#28A745', 'image': None}, 'side_bar': {'color': '#17A2B8', 'image': None}, 'wallpaper': {'color': '#F8F9FA', 'image': None}, 'primary': {'color': '#FFC107', 'image': None}, 'secondary': {'color': '#DC3545', 'image': None}, 'text': {'color': '#212529'}}}}, 'twilio_config': {'account_sid': 'ACb606788ada5dccbfeeebed0f440099b3', 'auth_token': 'ae4c7cc652d48caab2f2752699a6c4bd', 'flow_sid': 'FW5b3bf49ee04af4d23a118b613bbc0df2', 'to_phone': '+16199804758', 'from_phone': '+18336913467'}}
+2025-02-18 21:13:40,776 - AlertManagerLogger - DEBUG - New Config Loaded After Update:
+{
+  "price_config": {
+    "assets": [
+      "BTC",
+      "ETH",
+      "SOL"
+    ],
+    "currency": "USD",
+    "cmc_api_key": "c51c0c22-1bf3-4674-86bf-36f39a912d1a"
+  },
+  "system_config": {
+    "logging_enabled": true,
+    "log_level": "DEBUG",
+    "console_output": true,
+    "log_file": "C:/space_ship/price_monitor.log",
+    "db_path": "C:/space_ship/mother_brain.db",
+    "price_monitor_enabled": true,
+    "alert_monitor_enabled": true,
+    "sonic_monitor_loop_time": 300,
+    "last_price_update_time": null
+  },
+  "api_config": {
+    "coingecko_api_enabled": "ENABLE",
+    "kucoin_api_enabled": "ENABLE",
+    "coinmarketcap_api_enabled": "ENABLE",
+    "coinpaprika_api_enabled": "ENABLE",
+    "binance_api_enabled": "ENABLE",
+    "coinmarketcap_api_key": "c51c0c22-1bf3-4674-86bf-36f39a912d1a"
+  },
+  "alert_ranges": {
+    "heat_index_ranges": {
+      "enabled": false,
+      "low": 444.0,
+      "low_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "medium": 444.0,
+      "high": 777.0,
+      "medium_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "high_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      }
+    },
+    "collateral_ranges": {
+      "enabled": false,
+      "low": 1111.0,
+      "medium": 1111.0,
+      "high": 11111.0,
+      "low_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "medium_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "high_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      }
+    },
+    "value_ranges": {
+      "enabled": false,
+      "low": 1111.0,
+      "medium": 1111.0,
+      "high": 1111.0,
+      "low_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "medium_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "high_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      }
+    },
+    "size_ranges": {
+      "enabled": false,
+      "low": 11111.0,
+      "medium": 111111.0,
+      "high": 11111.0,
+      "low_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "medium_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "high_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      }
+    },
+    "leverage_ranges": {
+      "enabled": false,
+      "low": 11111.0,
+      "medium": 111111.0,
+      "high": 11111.0,
+      "low_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "medium_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "high_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      }
+    },
+    "liquidation_distance_ranges": {
+      "enabled": false,
+      "low": 1111111.0,
+      "medium": 111111.0,
+      "high": 11111.0,
+      "low_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "medium_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "high_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      }
+    },
+    "travel_percent_liquid_ranges": {
+      "enabled": false,
+      "low": -10.0,
+      "low_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "medium": -60.0,
+      "medium_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "high": -75.0,
+      "high_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      }
+    },
+    "travel_percent_profit_ranges": {
+      "enabled": true,
+      "low": -50.0,
+      "medium": -75.0,
+      "high": -85.0,
+      "low_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "medium_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      },
+      "high_notifications": {
+        "call": false,
+        "sms": false,
+        "email": false
+      }
+    },
+    "profit_ranges": {
+      "enabled": true,
+      "low": 46.0,
+      "low_notifications": {
+        "call": true,
+        "sms": true,
+        "email": true
+      },
+      "medium": 101.3,
+      "medium_notifications": {
+        "call": true,
+        "sms": true,
+        "email": true
+      },
+      "high": 202.0,
+      "high_notifications": {
+        "call": true,
+        "sms": true,
+        "email": true
+      }
+    }
+  },
+  "notification_config": {
+    "email": {
+      "smtp_server": "smtp.gmail.com",
+      "smtp_port": 587,
+      "smtp_user": "bubba.diego@gmail.com",
+      "smtp_password": "pzix taan afbe igxb",
+      "recipient_email": "bubba.diego@gmail.com"
+    },
+    "sms": {
+      "carrier_gateway": "txt.att.net",
+      "recipient_number": "6199804758"
+    }
+  },
+  "alert_cooldown_seconds": 6000,
+  "call_refractory_period": 1,
+  "theme_config": {
+    "selected_profile": "profile2",
+    "profiles": {
+      "profile1": {
+        "title_bar": {
+          "color": "#FF5733",
+          "image": "static/images/alert_wall.jpg"
+        },
+        "side_bar": {
+          "color": "#C70039",
+          "image": null
+        },
+        "wallpaper": {
+          "color": "#900C3F",
+          "image": "static/images/alert_wall.jpg"
+        },
+        "primary": {
+          "color": "#581845",
+          "image": null
+        },
+        "secondary": {
+          "color": "#FFC300",
+          "image": null
+        },
+        "text": {
+          "color": "#FFFFFF"
+        }
+      },
+      "profile2": {
+        "title_bar": {
+          "color": "#007BFF",
+          "image": null
+        },
+        "side_bar": {
+          "color": "#6C757D",
+          "image": null
+        },
+        "wallpaper": {
+          "color": "#F8F9FA",
+          "image": "static/images/alert_wall.jpg"
+        },
+        "primary": {
+          "color": "#28A745",
+          "image": null
+        },
+        "secondary": {
+          "color": "#17A2B8",
+          "image": null
+        },
+        "text": {
+          "color": "#212529"
+        }
+      },
+      "profile3": {
+        "title_bar": {
+          "color": "#343A40",
+          "image": null
+        },
+        "side_bar": {
+          "color": "#495057",
+          "image": null
+        },
+        "wallpaper": {
+          "color": "#E9ECEF",
+          "image": null
+        },
+        "primary": {
+          "color": "#007BFF",
+          "image": null
+        },
+        "secondary": {
+          "color": "#6C757D",
+          "image": null
+        },
+        "text": {
+          "color": "#FFFFFF"
+        }
+      },
+      "profile4": {
+        "title_bar": {
+          "color": "#28A745",
+          "image": null
+        },
+        "side_bar": {
+          "color": "#17A2B8",
+          "image": null
+        },
+        "wallpaper": {
+          "color": "#F8F9FA",
+          "image": null
+        },
+        "primary": {
+          "color": "#FFC107",
+          "image": null
+        },
+        "secondary": {
+          "color": "#DC3545",
+          "image": null
+        },
+        "text": {
+          "color": "#212529"
+        }
+      }
+    }
+  },
+  "twilio_config": {
+    "account_sid": "ACb606788ada5dccbfeeebed0f440099b3",
+    "auth_token": "ae4c7cc652d48caab2f2752699a6c4bd",
+    "flow_sid": "FW5b3bf49ee04af4d23a118b613bbc0df2",
+    "to_phone": "+16199804758",
+    "from_phone": "+18336913467"
+  }
+}
+2025-02-18 21:16:15,063 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-18 21:16:15,064 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-18 21:16:15,064 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 03:42:11,587 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 03:42:11,588 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 03:42:11,588 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 03:42:56,528 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 03:42:56,528 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 03:42:56,528 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 03:55:33,315 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 03:55:33,315 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 03:55:33,315 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 04:15:26,474 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 04:15:26,474 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 04:15:26,475 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 04:15:36,192 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 04:15:36,193 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 04:15:36,193 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 04:22:43,611 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 04:22:43,611 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 04:22:43,611 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 04:25:30,723 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 04:25:30,724 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 04:25:30,724 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 04:36:28,886 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:36:29,623 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:40:28,961 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:40:29,648 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:41:06,265 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:41:06,960 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:41:56,944 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:41:57,607 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:42:33,416 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 04:42:33,417 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 04:42:33,417 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 04:48:53,727 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:48:54,405 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:57:35,579 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:57:36,226 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:58:07,587 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:58:13,446 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:58:14,817 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:59:30,741 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:59:31,950 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:59:44,282 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 04:59:45,515 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 05:04:49,062 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 05:04:49,062 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 05:04:49,062 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 05:05:02,741 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 05:05:03,939 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 05:05:37,592 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 05:05:38,868 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 05:08:48,605 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 05:08:48,605 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 05:08:48,605 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 05:28:54,414 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 05:28:54,414 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 05:28:54,414 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 05:39:14,621 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 05:39:14,621 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 05:39:14,621 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 05:40:43,258 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 05:40:43,258 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 05:40:43,258 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 05:44:18,998 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 05:44:18,998 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 05:44:18,998 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 05:46:34,723 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 05:46:34,724 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 05:46:34,724 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 06:08:39,629 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 06:08:39,629 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 06:08:39,629 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 06:58:41,884 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 06:58:41,885 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 06:58:41,885 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 06:58:46,498 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 06:58:46,500 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 06:58:46,501 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 07:03:44,299 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 07:03:44,299 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 07:03:44,299 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 07:10:22,202 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 07:10:22,203 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 07:10:22,203 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 07:22:23,149 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-19 07:35:58,390 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 07:35:58,390 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 07:35:58,390 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 07:38:10,659 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-19 07:38:10,659 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-19 07:38:10,659 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-19 07:55:55,500 - AlertManagerLogger - INFO - AlertManager initialized.
