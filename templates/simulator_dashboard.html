@@ -51,15 +51,7 @@
   </form>
 
   <hr>
-  <h3>Simulation Results</h3>
-  <p><strong>Final Price:</strong> {{ results.final_price }}</p>
-  <p><strong>Rebalances Executed:</strong> {{ results.rebalance_count }}</p>
-  <p><strong>Cumulative Profit from Rebalances:</strong> {{ results.cumulative_profit }}</p>
-  <p><strong>Final Total Profit (incl. Unrealized PnL):</strong> {{ results.total_profit }}</p>
-
-  <canvas id="profitChart" width="400" height="200"></canvas>
-
-  <!-- Simulation Positions Table Section -->
+  <!-- Simulation Positions Table moved above the graph -->
   <div class="card mt-4">
     <div class="card-header">
       <h3 class="card-title">Simulation Position</h3>
@@ -106,24 +98,57 @@
     </div>
   </div>
 
+  <!-- Dropdown to select Y-Axis attribute -->
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <label for="yAxisSelect">Select Y-Axis Attribute:</label>
+      <select id="yAxisSelect" class="form-control">
+        <option value="cumulative_profit" selected>Cumulative Profit</option>
+        <option value="travel_percent">Travel Percent</option>
+        <option value="price">Price</option>
+        <option value="unrealized_pnl">Unrealized PnL</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Chart Canvas -->
+  <canvas id="profitChart" width="400" height="200" class="mt-4"></canvas>
+
+  <!-- Optionally, show additional simulation results summary below -->
+  <hr>
+  <h3>Simulation Results Summary</h3>
+  <p><strong>Final Price:</strong> {{ results.final_price }}</p>
+  <p><strong>Rebalances Executed:</strong> {{ results.rebalance_count }}</p>
+  <p><strong>Cumulative Profit from Rebalances:</strong> {{ results.cumulative_profit }}</p>
+  <p><strong>Final Total Profit (incl. Unrealized PnL):</strong> {{ results.total_profit }}</p>
 </div>
 {% endblock %}
 
 {% block extra_scripts %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  // Prepare labels and data for the chart from chart_data
-  const steps = {{ chart_data | map(attribute='step') | list | safe }};
-  const cumulativeProfits = {{ chart_data | map(attribute='cumulative_profit') | list | safe }};
+  // Save the full simulation log for use in the chart.
+  const simLog = {{ results.simulation_log | tojson }};
+  // Function to extract data for a given attribute from the simulation log.
+  function getChartData(attribute) {
+    return simLog.map(entry => entry[attribute] !== undefined ? entry[attribute] : null);
+  }
+  // Extract step numbers (for x-axis)
+  const steps = simLog.map(entry => entry.step);
 
+  // Initial dataset attribute
+  let currentAttribute = document.getElementById('yAxisSelect').value;
+  let datasetData = getChartData(currentAttribute);
+
+  // Create the chart
   const ctx = document.getElementById('profitChart').getContext('2d');
   const profitChart = new Chart(ctx, {
     type: 'line',
     data: {
       labels: steps,
       datasets: [{
-        label: 'Cumulative Profit',
-        data: cumulativeProfits,
+        label: currentAttribute.replace('_', ' ').toUpperCase(),
+        data: datasetData,
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
         tension: 0.1
@@ -135,10 +160,20 @@
           title: { display: true, text: 'Simulation Step (minute)' }
         },
         y: {
-          title: { display: true, text: 'Cumulative Profit' }
+          title: { display: true, text: currentAttribute.replace('_', ' ').toUpperCase() }
         }
       }
     }
+  });
+
+  // Update chart when the dropdown selection changes
+  document.getElementById('yAxisSelect').addEventListener('change', function() {
+    currentAttribute = this.value;
+    datasetData = getChartData(currentAttribute);
+    profitChart.data.datasets[0].data = datasetData;
+    profitChart.data.datasets[0].label = currentAttribute.replace('_', ' ').toUpperCase();
+    profitChart.options.scales.y.title.text = currentAttribute.replace('_', ' ').toUpperCase();
+    profitChart.update();
   });
 </script>
 
