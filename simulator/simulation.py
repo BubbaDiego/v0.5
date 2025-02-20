@@ -16,6 +16,7 @@ import math
 import datetime
 import logging
 import csv
+from utils.calc_services import CalcServices  # Import our helper
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -51,8 +52,9 @@ class PositionSimulator:
         self.rebalance_threshold = rebalance_threshold
         self.hedging_cost_pct = hedging_cost_pct
         self.position_side = position_side.lower()
+        self.original_entry_price = entry_price  # For static travel percent calculation
 
-        self.effective_entry_price = entry_price
+        self.effective_entry_price = entry_price  # This resets with each hedge.
         self.cumulative_profit = 0.0
         self.total_hedging_cost = 0.0
         self.rebalance_count = 0
@@ -68,9 +70,7 @@ class PositionSimulator:
 
     def _calculate_travel_percent(self, current_price: float) -> float:
         """
-        Calculate travel percent relative to the effective entry price.
-        For a long position: ((current_price - effective_entry_price) / (effective_entry_price - liquidation_price)) * 100.
-        For a short position: ((effective_entry_price - current_price) / (liquidation_price - effective_entry_price)) * 100.
+        Calculate dynamic travel percent relative to the effective entry price.
         """
         if self.position_side == "long":
             denominator = self.effective_entry_price - self.liquidation_price
@@ -86,8 +86,6 @@ class PositionSimulator:
     def _execute_rebalance(self, current_price: float):
         """
         Simulate a hedge by resetting the effective entry price and logging profit/loss.
-        For long positions: profit = (current_price - effective_entry_price) * position_size.
-        For short positions: profit = (effective_entry_price - current_price) * position_size.
         """
         if self.position_side == "long":
             trade_profit = (current_price - self.effective_entry_price) * self.position_size
@@ -113,20 +111,26 @@ class PositionSimulator:
                        drift: float = 0.05,
                        volatility: float = 0.8):
         """
-        Run the simulation over a specified duration (in minutes) using minute-based time steps.
+        Run the simulation over a specified duration.
         """
-        dt = dt_minutes / MINUTES_IN_YEAR
+        dt = dt_minutes / MINUTES_IN_YEAR  # Convert minutes to fraction of a year
         num_steps = int(simulation_duration / dt_minutes)
         current_price = self.entry_price
+        calc = CalcServices()  # to compute static travel percent
         logger.info(f"Running simulation for {num_steps} steps over {simulation_duration} minutes")
 
         for step in range(num_steps):
             sim_time = datetime.datetime.now() + datetime.timedelta(minutes=step * dt_minutes)
             next_price = self._simulate_price_path(current_price, drift, volatility, dt)
-            travel_pct = self._calculate_travel_percent(next_price)
+            dynamic_travel_pct = self._calculate_travel_percent(next_price)
+            # Compute static travel percent using the original entry price
+            static_travel_pct = calc.calculate_travel_percent_no_profit(self.position_side.upper(),
+                                                                        self.original_entry_price,
+                                                                        next_price,
+                                                                        self.liquidation_price)
             action = "NONE"
             hedge_details = None
-            if travel_pct <= self.rebalance_threshold:
+            if dynamic_travel_pct <= self.rebalance_threshold:
                 action = "REBALANCE"
                 hedge_details = self._execute_rebalance(next_price)
             if self.position_side == "long":
@@ -137,7 +141,8 @@ class PositionSimulator:
                 "step": step + 1,
                 "timestamp": sim_time.isoformat(),
                 "price": next_price,
-                "travel_percent": travel_pct,
+                "travel_percent": dynamic_travel_pct,
+                "static_travel_percent": static_travel_pct,
                 "action": action,
                 "unrealized_pnl": unrealized_pnl,
                 "cumulative_profit": self.cumulative_profit
@@ -146,7 +151,7 @@ class PositionSimulator:
                 step_log.update(hedge_details)
             self.simulation_log.append(step_log)
             logger.debug(
-                f"Step {step + 1}: Price={next_price:.2f}, Travel%={travel_pct:.2f}, Action={action}, Unrealized PnL={unrealized_pnl:.2f}, Cumulative Profit={self.cumulative_profit:.2f}")
+                f"Step {step + 1}: Price={next_price:.2f}, Dynamic Travel%={dynamic_travel_pct:.2f}, Static Travel%={static_travel_pct:.2f}, Action={action}, Unrealized PnL={unrealized_pnl:.2f}, Cumulative Profit={self.cumulative_profit:.2f}")
             current_price = next_price
 
         if self.position_side == "long":

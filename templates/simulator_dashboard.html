@@ -77,7 +77,8 @@
               <th>Value</th>
               <th>Size</th>
               <th>Leverage</th>
-              <th>Travel %</th>
+              <th>Dynamic Travel %</th>
+              <th>Static Travel %</th>
               <th>Heat Index</th>
               <th>Liq Distance</th>
               <th>Wallet</th>
@@ -87,7 +88,7 @@
             <tr>
               <td>BTC</td>
               <td>
-                <select id="simSide" class="form-control">
+                <select id="simSide" class="form-control" disabled>
                   <option value="long" {% if params.position_side == "long" %}selected{% endif %}>Long</option>
                   <option value="short" {% if params.position_side == "short" %}selected{% endif %}>Short</option>
                 </select>
@@ -102,6 +103,7 @@
               </td>
               <td><span id="simLeverage">{{ leverage | round(2) }}</span></td>
               <td><span id="simTravel">{% if results.simulation_log|length > 0 %}{{ results.simulation_log[-1].travel_percent | round(2) }}{% else %}N/A{% endif %}</span></td>
+              <td><span id="simStaticTravel">{% if results.simulation_log|length > 0 %}{{ results.simulation_log[-1].static_travel_percent | round(2) }}{% else %}N/A{% endif %}</span></td>
               <td>N/A</td>
               <td>N/A</td>
               <td>Simulation</td>
@@ -118,7 +120,8 @@
       <label for="yAxisSelect">Select Y-Axis Attribute:</label>
       <select id="yAxisSelect" class="form-control">
         <option value="cumulative_profit">Cumulative Profit</option>
-        <option value="travel_percent">Travel Percent</option>
+        <option value="travel_percent">Dynamic Travel %</option>
+        <option value="static_travel_percent">Static Travel %</option>
         <option value="price">Price</option>
         <option value="unrealized_pnl">Unrealized PnL</option>
       </select>

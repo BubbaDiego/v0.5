@@ -92,6 +92,88 @@ def simulator_dashboard():
                            leverage=leverage,
                            live_positions=live_positions)
 
+
+@simulator_bp.route('/compare', methods=['GET', 'POST'])
+def compare_simulation():
+    # Default simulation parameters (all in minutes where applicable)
+    params = {
+        "entry_price": 10000,
+        "liquidation_price": 8000,
+        "position_size": 1.0,
+        "collateral": 1000.0,
+        "rebalance_threshold": -25.0,
+        "hedging_cost_pct": 0.001,
+        "simulation_duration": 60,
+        "dt_minutes": 1,
+        "drift": 0.05,
+        "volatility": 0.8
+    }
+
+    # If the form is posted, update parameters
+    if request.method == "POST":
+        try:
+            params["entry_price"] = float(request.form.get("entry_price", params["entry_price"]))
+            params["liquidation_price"] = float(request.form.get("liquidation_price", params["liquidation_price"]))
+            params["position_size"] = float(request.form.get("position_size", params["position_size"]))
+            params["collateral"] = float(request.form.get("collateral", params["collateral"]))
+            params["rebalance_threshold"] = float(
+                request.form.get("rebalance_threshold", params["rebalance_threshold"]))
+            params["hedging_cost_pct"] = float(request.form.get("hedging_cost_pct", params["hedging_cost_pct"]))
+            params["simulation_duration"] = float(
+                request.form.get("simulation_duration", params["simulation_duration"]))
+            params["dt_minutes"] = float(request.form.get("dt_minutes", params["dt_minutes"]))
+            params["drift"] = float(request.form.get("drift", params["drift"]))
+            params["volatility"] = float(request.form.get("volatility", params["volatility"]))
+        except Exception as e:
+            logger.error("Error parsing simulation parameters: %s", e)
+
+    # Run the simulation using your existing simulator (adjust if you want to add more options, such as side)
+    from simulator.simulation import PositionSimulator
+    simulator = PositionSimulator(
+        entry_price=params["entry_price"],
+        liquidation_price=params["liquidation_price"],
+        position_size=params["position_size"],
+        rebalance_threshold=params["rebalance_threshold"],
+        hedging_cost_pct=params["hedging_cost_pct"],
+        collateral=params["collateral"]
+    )
+    sim_results = simulator.run_simulation(
+        simulation_duration=params["simulation_duration"],
+        dt_minutes=params["dt_minutes"],
+        drift=params["drift"],
+        volatility=params["volatility"]
+    )
+    leverage = (simulator.effective_entry_price * params["position_size"]) / params["collateral"]
+
+    # Prepare chart data for simulation (e.g., cumulative profit over time)
+    sim_chart_data = []
+    for log_entry in sim_results["simulation_log"]:
+        sim_chart_data.append({
+            "step": log_entry["step"],
+            "cumulative_profit": log_entry["cumulative_profit"],
+            "price": log_entry["price"],
+            "travel_percent": log_entry["travel_percent"],
+            "unrealized_pnl": log_entry["unrealized_pnl"]
+        })
+
+    # Get real data from the database (using your existing PositionService and CalcServices)
+    from positions.position_service import PositionService
+    from utils.calc_services import CalcServices
+    real_positions = PositionService.get_all_positions()
+    real_totals = CalcServices().calculate_totals(real_positions)
+
+    # (Optional) If you have snapshots/history data, you could also prepare a time-series chart
+    # for real data. For now, we pass the aggregated totals.
+
+    return render_template("simulator_compare.html",
+                           params=params,
+                           sim_results=sim_results,
+                           sim_chart_data=sim_chart_data,
+                           leverage=leverage,
+                           real_totals=real_totals,
+                           real_positions=real_positions)
+
+
 if __name__ == "__main__":
     from flask import Flask
     app = Flask(__name__)

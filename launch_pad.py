@@ -333,6 +333,19 @@ def update_theme_context():
         theme = theme_config.get("profiles", {}).get(selected, {})
     return dict(theme=theme)
 
+# NEW: Global update route alias using the update_jupiter function from positions_bp.
+
+
+@app.route("/update", methods=["GET"])
+def update():
+    from positions.positions_bp import update_jupiter  # Make sure update_jupiter is defined and returns a Response
+    return update_jupiter()
+
+# NEW: Additional alias to allow "/dashboard/update" as well.
+@app.route("/dashboard/update", methods=["GET"])
+def dashboard_update():
+    return update()
+
 if __name__ == "__main__":
     monitor = False
     if len(sys.argv) > 1 and sys.argv[1] == "--monitor":
