@@ -5,10 +5,9 @@ simulator_bp.py
 This blueprint integrates the dynamic hedging/gamma scalping simulation engine
 with a web dashboard. You can input simulation parameters—including collateral,
 position size, entry price, liquidation price, rebalance threshold, hedging cost,
-simulation duration, time step, drift, and volatility—and view auto‑calculated
+simulation duration, time step, drift, volatility, and position side—and view auto‑calculated
 values such as leverage and cumulative profit. The simulation log is processed
-into chart data for visualization. (Live positions data and real‑time updates via
-SocketIO can be added later as enhancements.)
+into chart data for visualization.
 """
 
 from flask import Blueprint, render_template, request, jsonify, current_app, url_for
@@ -31,7 +30,8 @@ def simulator_dashboard():
         "simulation_duration": 60,       # Total simulation duration in minutes
         "dt_minutes": 1,               # Time step (minutes)
         "drift": 0.05,                 # Annual drift rate
-        "volatility": 0.8              # Annual volatility
+        "volatility": 0.8,             # Annual volatility
+        "position_side": "long"        # Position side: "long" or "short"
     }
 
     if request.method == "POST":
@@ -46,18 +46,19 @@ def simulator_dashboard():
             params["dt_minutes"] = float(request.form.get("dt_minutes", params["dt_minutes"]))
             params["drift"] = float(request.form.get("drift", params["drift"]))
             params["volatility"] = float(request.form.get("volatility", params["volatility"]))
+            params["position_side"] = request.form.get("position_side", params["position_side"]).lower()
         except Exception as e:
             logger.error("Error parsing simulation parameters: %s", e)
 
     # Instantiate the simulation engine.
-    # The PositionSimulator now accepts a 'collateral' parameter.
     simulator = PositionSimulator(
         entry_price=params["entry_price"],
         liquidation_price=params["liquidation_price"],
         position_size=params["position_size"],
         rebalance_threshold=params["rebalance_threshold"],
         hedging_cost_pct=params["hedging_cost_pct"],
-        collateral=params["collateral"]
+        collateral=params["collateral"],
+        position_side=params["position_side"]
     )
 
     results = simulator.run_simulation(
@@ -70,12 +71,15 @@ def simulator_dashboard():
     # Compute leverage as (effective_entry_price * position_size) / collateral
     leverage = (simulator.effective_entry_price * params["position_size"]) / params["collateral"]
 
-    # Prepare chart data from the simulation log (mapping each step to its cumulative profit)
+    # Prepare chart data from the simulation log (mapping each step to its attributes)
     chart_data = []
     for log_entry in results["simulation_log"]:
         chart_data.append({
             "step": log_entry["step"],
-            "cumulative_profit": log_entry["cumulative_profit"]
+            "cumulative_profit": log_entry["cumulative_profit"],
+            "travel_percent": log_entry["travel_percent"],
+            "price": log_entry["price"],
+            "unrealized_pnl": log_entry["unrealized_pnl"]
         })
 
     # Placeholder for live positions data (to be integrated later)

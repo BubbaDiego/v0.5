@@ -21,6 +21,13 @@
     </div>
     <div class="row mt-2">
       <div class="col-md-4 form-group">
+        <label for="position_side">Position Side:</label>
+        <select id="position_side" name="position_side" class="form-control">
+          <option value="long" {% if params.position_side == "long" %}selected{% endif %}>Long</option>
+          <option value="short" {% if params.position_side == "short" %}selected{% endif %}>Short</option>
+        </select>
+      </div>
+      <div class="col-md-4 form-group">
         <label for="rebalance_threshold">Rebalance Threshold (%):</label>
         <input type="number" step="any" class="form-control" id="rebalance_threshold" name="rebalance_threshold" value="{{ params.rebalance_threshold }}">
       </div>
@@ -28,12 +35,12 @@
         <label for="hedging_cost_pct">Hedging Cost (decimal):</label>
         <input type="number" step="any" class="form-control" id="hedging_cost_pct" name="hedging_cost_pct" value="{{ params.hedging_cost_pct }}">
       </div>
+    </div>
+    <div class="row mt-2">
       <div class="col-md-4 form-group">
         <label for="simulation_duration">Simulation Duration (minutes):</label>
         <input type="number" step="any" class="form-control" id="simulation_duration" name="simulation_duration" value="{{ params.simulation_duration }}">
       </div>
-    </div>
-    <div class="row mt-2">
       <div class="col-md-4 form-group">
         <label for="dt_minutes">Time Step (minutes):</label>
         <input type="number" step="any" class="form-control" id="dt_minutes" name="dt_minutes" value="{{ params.dt_minutes }}">
@@ -42,6 +49,8 @@
         <label for="drift">Annual Drift (e.g., 0.05 for 5%):</label>
         <input type="number" step="any" class="form-control" id="drift" name="drift" value="{{ params.drift }}">
       </div>
+    </div>
+    <div class="row mt-2">
       <div class="col-md-4 form-group">
         <label for="volatility">Annual Volatility (e.g., 0.8 for 80%):</label>
         <input type="number" step="any" class="form-control" id="volatility" name="volatility" value="{{ params.volatility }}">
@@ -62,7 +71,7 @@
           <thead>
             <tr>
               <th>Asset</th>
-              <th>Type</th>
+              <th>Side</th>
               <th>Profit</th>
               <th>Collateral</th>
               <th>Value</th>
@@ -77,7 +86,12 @@
           <tbody>
             <tr>
               <td>BTC</td>
-              <td>Simulated</td>
+              <td>
+                <select id="simSide" class="form-control">
+                  <option value="long" {% if params.position_side == "long" %}selected{% endif %}>Long</option>
+                  <option value="short" {% if params.position_side == "short" %}selected{% endif %}>Short</option>
+                </select>
+              </td>
               <td><span id="simProfit">{{ results.cumulative_profit | round(2) }}</span></td>
               <td>
                 <input type="number" step="any" id="simCollateral" value="{{ params.collateral }}" class="form-control" />
@@ -98,12 +112,12 @@
     </div>
   </div>
 
-  <!-- Dropdown to select Y-Axis attribute -->
+  <!-- Dropdown to select Y-Axis attribute (persisted in localStorage) -->
   <div class="row mt-4">
     <div class="col-md-4">
       <label for="yAxisSelect">Select Y-Axis Attribute:</label>
       <select id="yAxisSelect" class="form-control">
-        <option value="cumulative_profit" selected>Cumulative Profit</option>
+        <option value="cumulative_profit">Cumulative Profit</option>
         <option value="travel_percent">Travel Percent</option>
         <option value="price">Price</option>
         <option value="unrealized_pnl">Unrealized PnL</option>
@@ -114,7 +128,7 @@
   <!-- Chart Canvas -->
   <canvas id="profitChart" width="400" height="200" class="mt-4"></canvas>
 
-  <!-- Optionally, show additional simulation results summary below -->
+  <!-- Simulation Results Summary -->
   <hr>
   <h3>Simulation Results Summary</h3>
   <p><strong>Final Price:</strong> {{ results.final_price }}</p>
@@ -127,7 +141,21 @@
 {% block extra_scripts %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  // Save the full simulation log for use in the chart.
+  // Persist Y-Axis selection using localStorage.
+  const yAxisSelect = document.getElementById('yAxisSelect');
+  // On page load, set selection from localStorage if available.
+  const storedYAxis = localStorage.getItem('simulator_yAxis');
+  if (storedYAxis) {
+    yAxisSelect.value = storedYAxis;
+  }
+
+  // Save selection when changed.
+  yAxisSelect.addEventListener('change', function() {
+    localStorage.setItem('simulator_yAxis', this.value);
+    updateChart();
+  });
+
+  // Save simulation log data
   const simLog = {{ results.simulation_log | tojson }};
   // Function to extract data for a given attribute from the simulation log.
   function getChartData(attribute) {
@@ -136,11 +164,10 @@
   // Extract step numbers (for x-axis)
   const steps = simLog.map(entry => entry.step);
 
-  // Initial dataset attribute
-  let currentAttribute = document.getElementById('yAxisSelect').value;
+  // Create the chart with initial attribute from dropdown.
+  let currentAttribute = yAxisSelect.value;
   let datasetData = getChartData(currentAttribute);
 
-  // Create the chart
   const ctx = document.getElementById('profitChart').getContext('2d');
   const profitChart = new Chart(ctx, {
     type: 'line',
@@ -166,15 +193,14 @@
     }
   });
 
-  // Update chart when the dropdown selection changes
-  document.getElementById('yAxisSelect').addEventListener('change', function() {
-    currentAttribute = this.value;
+  function updateChart() {
+    currentAttribute = yAxisSelect.value;
     datasetData = getChartData(currentAttribute);
     profitChart.data.datasets[0].data = datasetData;
     profitChart.data.datasets[0].label = currentAttribute.replace('_', ' ').toUpperCase();
     profitChart.options.scales.y.title.text = currentAttribute.replace('_', ' ').toUpperCase();
     profitChart.update();
-  });
+  }
 </script>
 
 <script>
@@ -185,14 +211,11 @@
     const collateral = parseFloat(document.getElementById("simCollateral").value) || 1;
     const value = size * finalPrice;
     const leverage = collateral !== 0 ? (value / collateral) : 0;
-
     document.getElementById("simValue").innerText = value.toFixed(2);
     document.getElementById("simLeverage").innerText = leverage.toFixed(2);
   }
-
   document.getElementById("simSize").addEventListener("input", updateSimValues);
   document.getElementById("simCollateral").addEventListener("input", updateSimValues);
-
   updateSimValues();
 </script>
 {% endblock %}

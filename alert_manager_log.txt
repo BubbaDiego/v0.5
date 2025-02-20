@@ -1545,3 +1545,11 @@
 2025-02-20 04:23:29,064 - AlertManagerLogger - INFO - No alerts triggered.
 2025-02-20 04:33:35,972 - AlertManagerLogger - INFO - AlertManager initialized.
 2025-02-20 04:33:37,548 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 04:36:24,423 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 04:36:25,861 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 04:36:36,297 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-20 04:36:36,298 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-20 04:36:36,298 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-20 04:46:30,420 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 04:47:16,002 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 04:47:18,048 - AlertManagerLogger - INFO - AlertManager initialized.
