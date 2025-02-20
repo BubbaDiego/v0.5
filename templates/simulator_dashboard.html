@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block title %}Simulator Dashboard{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+  <h2>Dynamic Hedging Simulator</h2>
+  <form method="post" action="{{ url_for('simulator.simulator_dashboard') }}">
+    <div class="row">
+      <div class="col-md-4 form-group">
+        <label for="entry_price">Entry Price:</label>
+        <input type="number" step="any" class="form-control" id="entry_price" name="entry_price" value="{{ params.entry_price }}">
+      </div>
+      <div class="col-md-4 form-group">
+        <label for="liquidation_price">Liquidation Price:</label>
+        <input type="number" step="any" class="form-control" id="liquidation_price" name="liquidation_price" value="{{ params.liquidation_price }}">
+      </div>
+      <div class="col-md-4 form-group">
+        <label for="position_size">Position Size:</label>
+        <input type="number" step="any" class="form-control" id="position_size" name="position_size" value="{{ params.position_size }}">
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-4 form-group">
+        <label for="rebalance_threshold">Rebalance Threshold (%):</label>
+        <input type="number" step="any" class="form-control" id="rebalance_threshold" name="rebalance_threshold" value="{{ params.rebalance_threshold }}">
+      </div>
+      <div class="col-md-4 form-group">
+        <label for="hedging_cost_pct">Hedging Cost (decimal):</label>
+        <input type="number" step="any" class="form-control" id="hedging_cost_pct" name="hedging_cost_pct" value="{{ params.hedging_cost_pct }}">
+      </div>
+      <div class="col-md-4 form-group">
+        <label for="simulation_duration">Simulation Duration (minutes):</label>
+        <input type="number" step="any" class="form-control" id="simulation_duration" name="simulation_duration" value="{{ params.simulation_duration }}">
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-4 form-group">
+        <label for="dt_minutes">Time Step (minutes):</label>
+        <input type="number" step="any" class="form-control" id="dt_minutes" name="dt_minutes" value="{{ params.dt_minutes }}">
+      </div>
+      <div class="col-md-4 form-group">
+        <label for="drift">Annual Drift (e.g., 0.05 for 5%):</label>
+        <input type="number" step="any" class="form-control" id="drift" name="drift" value="{{ params.drift }}">
+      </div>
+      <div class="col-md-4 form-group">
+        <label for="volatility">Annual Volatility (e.g., 0.8 for 80%):</label>
+        <input type="number" step="any" class="form-control" id="volatility" name="volatility" value="{{ params.volatility }}">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Run Simulation</button>
+  </form>
+
+  <hr>
+  <h3>Simulation Results</h3>
+  <p><strong>Final Price:</strong> {{ results.final_price }}</p>
+  <p><strong>Rebalances Executed:</strong> {{ results.rebalance_count }}</p>
+  <p><strong>Cumulative Profit from Rebalances:</strong> {{ results.cumulative_profit }}</p>
+  <p><strong>Final Total Profit (incl. Unrealized PnL):</strong> {{ results.total_profit }}</p>
+
+  <canvas id="profitChart" width="400" height="200"></canvas>
+
+  <!-- Simulation Positions Table Section -->
+  <div class="card mt-4">
+    <div class="card-header">
+      <h3 class="card-title">Simulation Position</h3>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="simPositionsTable">
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Type</th>
+              <th>Profit</th>
+              <th>Collateral</th>
+              <th>Value</th>
+              <th>Size</th>
+              <th>Leverage</th>
+              <th>Travel %</th>
+              <th>Heat Index</th>
+              <th>Liq Distance</th>
+              <th>Wallet</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>BTC</td>
+              <td>Simulated</td>
+              <td><span id="simProfit">{{ results.cumulative_profit | round(2) }}</span></td>
+              <td>
+                <input type="number" step="any" id="simCollateral" value="{{ params.collateral }}" class="form-control" />
+              </td>
+              <td><span id="simValue">{{ (params.position_size * results.final_price) | round(2) }}</span></td>
+              <td>
+                <input type="number" step="any" id="simSize" value="{{ params.position_size }}" class="form-control" />
+              </td>
+              <td><span id="simLeverage">{{ leverage | round(2) }}</span></td>
+              <td><span id="simTravel">{% if results.simulation_log|length > 0 %}{{ results.simulation_log[-1].travel_percent | round(2) }}{% else %}N/A{% endif %}</span></td>
+              <td>N/A</td>
+              <td>N/A</td>
+              <td>Simulation</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Prepare labels and data for the chart from chart_data
+  const steps = {{ chart_data | map(attribute='step') | list | safe }};
+  const cumulativeProfits = {{ chart_data | map(attribute='cumulative_profit') | list | safe }};
+
+  const ctx = document.getElementById('profitChart').getContext('2d');
+  const profitChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: steps,
+      datasets: [{
+        label: 'Cumulative Profit',
+        data: cumulativeProfits,
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+      }]
+    },
+    options: {
+      scales: {
+        x: {
+          title: { display: true, text: 'Simulation Step (minute)' }
+        },
+        y: {
+          title: { display: true, text: 'Cumulative Profit' }
+        }
+      }
+    }
+  });
+</script>
+
+<script>
+  // Function to update computed simulation fields when editable inputs change
+  function updateSimValues() {
+    const finalPrice = parseFloat("{{ results.final_price }}");
+    const size = parseFloat(document.getElementById("simSize").value) || 0;
+    const collateral = parseFloat(document.getElementById("simCollateral").value) || 1;
+    const value = size * finalPrice;
+    const leverage = collateral !== 0 ? (value / collateral) : 0;
+
+    document.getElementById("simValue").innerText = value.toFixed(2);
+    document.getElementById("simLeverage").innerText = leverage.toFixed(2);
+  }
+
+  document.getElementById("simSize").addEventListener("input", updateSimValues);
+  document.getElementById("simCollateral").addEventListener("input", updateSimValues);
+
+  updateSimValues();
+</script>
+{% endblock %}

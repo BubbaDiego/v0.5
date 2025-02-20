@@ -184,9 +184,16 @@
               </li>
               <!-- ChatGPT Side Menu Item -->
               <li class="nav-item">
-               <a href="{{ url_for('dashboard.theme_options') }}" class="nav-link">
+                <a href="{{ url_for('dashboard.theme_options') }}" class="nav-link">
                   <i class="nav-icon bi bi-chat-left-text"></i>
                   <p>ChatGPT</p>
+                </a>
+              </li>
+              <!-- Simulation Menu Item (New) -->
+              <li class="nav-item">
+                <a href="{{ url_for('simulator.simulator_dashboard') }}" class="nav-link">
+                  <i class="nav-icon bi bi-sliders"></i>
+                  <p>Simulation</p>
                 </a>
               </li>
             </ul>

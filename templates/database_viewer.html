@@ -190,7 +190,55 @@
       </div>
     </div>
 
-    {# Prices Section - New #}
+    {# Positions Totals History Section - New #}
+    {% set pos_totals_data = db_data.positions_totals_history | default({ "columns": [], "rows": [] }) %}
+    <div class="card" data-table="positions_totals_history" data-columns='{{ pos_totals_data.columns | tojson | safe }}'>
+      <div class="card-header" data-target="#collapse-pos-totals">
+        <button class="btn btn-light" type="button">
+          <strong>Positions Totals History</strong>
+        </button>
+        <button class="btn btn-sm btn-outline-danger deleteTableBtn" title="Delete Table">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+      <div id="collapse-pos-totals" class="collapse show">
+        <div class="card-body">
+          <table class="table table-bordered table-hover">
+            <thead class="table-light">
+              <tr>
+                {% for col in pos_totals_data.columns %}
+                  <th>{{ col }}</th>
+                {% endfor %}
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in pos_totals_data.rows %}
+                <tr data-row-json='{{ row | tojson | safe }}'>
+                  {% for col in pos_totals_data.columns %}
+                    <td>{{ row[col] }}</td>
+                  {% endfor %}
+                  <td class="text-center">
+                    <button class="btn btn-sm btn-secondary editBtn" title="Edit">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger deleteBtn" title="Delete Row">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td colspan="{{ pos_totals_data.columns|length + 1 }}" class="text-center">No positions totals history found.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    {# Prices Section #}
     {% set prices_data = db_data.prices | default({ "columns": [], "rows": [] }) %}
     <div class="card" data-table="prices" data-columns='{{ prices_data.columns | tojson | safe }}'>
       <div class="card-header" data-target="#collapse-prices">
@@ -268,7 +316,7 @@
 
   <script>
     // For this file, we'll assume all tables are fully editable.
-    const fullyEditableTables = ['wallets', 'positions', 'system_vars', 'prices'];
+    const fullyEditableTables = ['wallets', 'positions', 'system_vars', 'prices', 'positions_totals_history'];
 
     document.addEventListener('DOMContentLoaded', function() {
       // Toggle collapse functionality for each card header.

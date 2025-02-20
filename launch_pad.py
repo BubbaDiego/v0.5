@@ -5,7 +5,7 @@ Description:
   The main Flask application for the Sonic Dashboard. This file:
     - Loads configuration and sets up logging.
     - Initializes the Flask app and SocketIO.
-    - Registers blueprints for positions, alerts, prices, dashboard, portfolio, and ChatGPT.
+    - Registers blueprints for positions, alerts, prices, dashboard, portfolio, ChatGPT, and simulator dashboard.
     - Defines global routes for non-dashboard-specific functionality (e.g., assets, exchanges, etc.).
     - Optionally launches a local monitor (local_monitor.py) in a new console window if
       the '--monitor' command-line flag is provided.
@@ -50,6 +50,9 @@ from portfolio.portfolio_bp import portfolio_bp
 # *** NEW: Import the ChatGPT blueprint ***
 from chat_gpt.chat_gpt_bp import chat_gpt_bp
 
+# *** NEW: Import the Simulator Dashboard blueprint ***
+from simulator.simulator_bp import simulator_bp as simulator_bp
+
 # Setup logging
 logger = logging.getLogger("WebAppLogger")
 logger.setLevel(logging.DEBUG)
@@ -81,6 +84,9 @@ app.register_blueprint(portfolio_bp, url_prefix="/portfolio")
 
 # *** NEW: Register the ChatGPT blueprint ***
 app.register_blueprint(chat_gpt_bp)
+
+# *** NEW: Register the Simulator Dashboard blueprint ***
+app.register_blueprint(simulator_bp, url_prefix="/simulator")
 
 # --- Alias endpoints if needed ---
 if "dashboard.index" in app.view_functions:
