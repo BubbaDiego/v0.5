@@ -1,0 +1,333 @@
+{% extends "base.html" %}
+
+{% block extra_styles %}
+<style>
+  /* Container styling */
+  .container-fluid {
+    padding-top: 20px;
+  }
+  /* Reduce the space between the title bar and the page title */
+  .container-fluid h1 {
+    margin-top: 0;
+    margin-bottom: 0.375rem;
+  }
+  /* Chart styling */
+  #dualChart {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  /* Card and table styling */
+  .card {
+    margin-bottom: 20px;
+  }
+  .card-header {
+    background-color: {{ theme.get('sidebar', {}).get('bg', '#007bff') }};
+    color: white;
+  }
+  .table-responsive {
+    font-size: 0.8rem;
+  }
+  .table-responsive table {
+    width: 100%;
+  }
+  .table-responsive th,
+  .table-responsive td {
+    padding: 0.2rem 0.4rem;
+    line-height: 1.1;
+    max-width: 80px;
+    word-wrap: break-word;
+  }
+  /* Override asset image size */
+  .asset-icon {
+    width: 30px !important;
+    height: 30px !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    object-fit: contain;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <h1 class="mb-4">Comparison: Simulated vs Historical Data</h1>
+
+  <!-- Dual Line Chart Section -->
+  <div class="row">
+    <div class="col-md-12 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <strong>Simulated vs Historical Data Chart</strong>
+        </div>
+        <div class="card-body">
+          <div id="dualChart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Positions Tables Section -->
+  <div class="row">
+    <!-- Simulated Positions Table -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Simulated Positions</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="simulatedPositionsTable">
+              <thead>
+                <tr>
+                  <th>Asset</th>
+                  <th>Type</th>
+                  <th>Profit</th>
+                  <th>Collateral</th>
+                  <th>Value</th>
+                  <th>Size</th>
+                  <th>Leverage</th>
+                  <th>Travel %</th>
+                  <th>Heat Index</th>
+                  <th>Liq Distance</th>
+                  <th>Wallet</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for pos in simulated_positions|sort(attribute='size', reverse=True) %}
+                <tr>
+                  <td>
+                    {% if pos.asset_type == 'BTC' %}
+                      <img src="{{ url_for('static', filename='images/btc_logo.png') }}" alt="BTC" class="asset-icon">
+                    {% elif pos.asset_type == 'ETH' %}
+                      <img src="{{ url_for('static', filename='images/eth_logo.png') }}" alt="ETH" class="asset-icon">
+                    {% elif pos.asset_type == 'SOL' %}
+                      <img src="{{ url_for('static', filename='images/sol_logo.png') }}" alt="SOL" class="asset-icon">
+                    {% else %}
+                      {{ pos.asset_type }}
+                    {% endif %}
+                  </td>
+                  <td><b>{{ pos.position_type }}</b></td>
+                  <td>
+                    {% if pos.pnl_after_fees_usd is defined and pos.pnl_after_fees_usd is not none %}
+                      {{ "{:,.2f}".format(pos.pnl_after_fees_usd) }}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>{{ "{:,.2f}".format(pos.collateral) }}</td>
+                  <td>{{ "{:,.2f}".format(pos.value) }}</td>
+                  <td>{{ "{:,.2f}".format(pos.size) }}</td>
+                  <td>{{ "{:,.2f}".format(pos.leverage) }}</td>
+                  <td>
+                    {% if pos.current_travel_percent is not none %}
+                      {{ "{:,.2f}".format(pos.current_travel_percent) }}%
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if pos.heat_index is not none %}
+                      {{ "{:,.2f}".format(pos.heat_index) }}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if pos.liquidation_distance is not none %}
+                      {{ "{:,.2f}".format(pos.liquidation_distance) }}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if pos.wallet_image %}
+                      <img src="{{ url_for('static', filename='images/' ~ pos.wallet_image) }}" alt="Wallet Image" class="wallet-img">
+                    {% else %}
+                      Unknown
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                {% set sim_total_profit = simulated_positions|sum(attribute='pnl_after_fees_usd') %}
+                <tr style="font-weight: bold; text-align: center;">
+                  <td>TOTALS</td>
+                  <td></td>
+                  <td>{{ "{:,.2f}".format(sim_total_profit) }}</td>
+                  <td><!-- Total collateral --></td>
+                  <td><!-- Total value --></td>
+                  <td><!-- Total size --></td>
+                  <td><!-- Avg leverage --></td>
+                  <td><!-- Avg travel percent --></td>
+                  <td><!-- Avg heat index --></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Historical Positions Table -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Historical Positions</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="realPositionsTable">
+              <thead>
+                <tr>
+                  <th>Asset</th>
+                  <th>Type</th>
+                  <th>Profit</th>
+                  <th>Collateral</th>
+                  <th>Value</th>
+                  <th>Size</th>
+                  <th>Leverage</th>
+                  <th>Travel %</th>
+                  <th>Heat Index</th>
+                  <th>Liq Distance</th>
+                  <th>Wallet</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for pos in real_positions|sort(attribute='size', reverse=True) %}
+                <tr>
+                  <td>
+                    {% if pos.asset_type == 'BTC' %}
+                      <img src="{{ url_for('static', filename='images/btc_logo.png') }}" alt="BTC" class="asset-icon">
+                    {% elif pos.asset_type == 'ETH' %}
+                      <img src="{{ url_for('static', filename='images/eth_logo.png') }}" alt="ETH" class="asset-icon">
+                    {% elif pos.asset_type == 'SOL' %}
+                      <img src="{{ url_for('static', filename='images/sol_logo.png') }}" alt="SOL" class="asset-icon">
+                    {% else %}
+                      {{ pos.asset_type }}
+                    {% endif %}
+                  </td>
+                  <td><b>{{ pos.position_type }}</b></td>
+                  <td>
+                    {% if pos.pnl_after_fees_usd is defined and pos.pnl_after_fees_usd is not none %}
+                      {{ "{:,.2f}".format(pos.pnl_after_fees_usd) }}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>{{ "{:,.2f}".format(pos.collateral) }}</td>
+                  <td>{{ "{:,.2f}".format(pos.value) }}</td>
+                  <td>{{ "{:,.2f}".format(pos.size) }}</td>
+                  <td>{{ "{:,.2f}".format(pos.leverage) }}</td>
+                  <td>
+                    {% if pos.current_travel_percent is not none %}
+                      {{ "{:,.2f}".format(pos.current_travel_percent) }}%
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if pos.heat_index is not none %}
+                      {{ "{:,.2f}".format(pos.heat_index) }}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if pos.liquidation_distance is not none %}
+                      {{ "{:,.2f}".format(pos.liquidation_distance) }}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if pos.wallet_image %}
+                      <img src="{{ url_for('static', filename='images/' ~ pos.wallet_image) }}" alt="Wallet Image" class="wallet-img">
+                    {% else %}
+                      Unknown
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                {% set real_total_profit = real_positions|sum(attribute='pnl_after_fees_usd') %}
+                <tr style="font-weight: bold; text-align: center;">
+                  <td>TOTALS</td>
+                  <td></td>
+                  <td>{{ "{:,.2f}".format(real_total_profit) }}</td>
+                  <td><!-- Total collateral --></td>
+                  <td><!-- Total value --></td>
+                  <td><!-- Total size --></td>
+                  <td><!-- Avg leverage --></td>
+                  <td><!-- Avg travel percent --></td>
+                  <td><!-- Avg heat index --></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<!-- Include ApexCharts from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+<script>
+  // Chart data is passed from the backend as chart_data, safely defaulted if undefined
+  var chartData = {{ chart_data | default({'simulated': [], 'real': []}) | tojson }};
+
+  var options = {
+    chart: {
+      type: 'line',
+      height: 350,
+      zoom: { enabled: false }
+    },
+    stroke: { curve: 'smooth', width: 3 },
+    markers: { size: 0 },
+    series: [
+      { name: 'Simulated', data: chartData.simulated },
+      { name: 'Historical', data: chartData.real }
+    ],
+    xaxis: {
+      type: 'datetime',
+      labels: {
+        formatter: function(val) {
+          return new Date(val).toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit' });
+        }
+      }
+    },
+    yaxis: {
+      labels: {
+        formatter: function(val) {
+          return Number(val).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+      }
+    },
+    tooltip: {
+      x: { format: 'dd MMM HH:mm' },
+      y: {
+        formatter: function(val) {
+          return Number(val).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+      }
+    },
+    title: {
+      text: 'Simulated vs Historical Data Comparison',
+      align: 'center',
+      style: { fontSize: '16px', fontWeight: 'bold' }
+    }
+  };
+
+  var dualChart = new ApexCharts(document.querySelector("#dualChart"), options);
+  dualChart.render();
+</script>
+{% endblock %}

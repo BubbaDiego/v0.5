@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+
 {% block title %}Simulator Dashboard{% endblock %}
 
 {% block content %}
@@ -60,7 +60,7 @@
   </form>
 
   <hr>
-  <!-- Simulation Positions Table moved above the graph -->
+  <!-- Simulation Positions Table -->
   <div class="card mt-4">
     <div class="card-header">
       <h3 class="card-title">Simulation Position</h3>
@@ -114,22 +114,12 @@
     </div>
   </div>
 
-  <!-- Dropdown to select Y-Axis attribute (persisted in localStorage) -->
+  <!-- Chart Canvas for the Main Simulation -->
   <div class="row mt-4">
-    <div class="col-md-4">
-      <label for="yAxisSelect">Select Y-Axis Attribute:</label>
-      <select id="yAxisSelect" class="form-control">
-        <option value="cumulative_profit">Cumulative Profit</option>
-        <option value="travel_percent">Dynamic Travel %</option>
-        <option value="static_travel_percent">Static Travel %</option>
-        <option value="price">Price</option>
-        <option value="unrealized_pnl">Unrealized PnL</option>
-      </select>
+    <div class="col-md-12">
+      <canvas id="profitChart" width="400" height="200"></canvas>
     </div>
   </div>
-
-  <!-- Chart Canvas -->
-  <canvas id="profitChart" width="400" height="200" class="mt-4"></canvas>
 
   <!-- Simulation Results Summary -->
   <hr>
@@ -138,6 +128,19 @@
   <p><strong>Rebalances Executed:</strong> {{ results.rebalance_count }}</p>
   <p><strong>Cumulative Profit from Rebalances:</strong> {{ results.cumulative_profit }}</p>
   <p><strong>Final Total Profit (incl. Unrealized PnL):</strong> {{ results.total_profit }}</p>
+
+  <!-- New: Simulation Comparison Section -->
+  <hr>
+  <h3>Simulation Comparison</h3>
+  <p>
+    Baseline Collateral: {{ params.collateral }}<br>
+    Tweaked Collateral (+10%): {{ params.collateral * 1.10 }}
+  </p>
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <canvas id="compareChart" width="800" height="400"></canvas>
+    </div>
+  </div>
 </div>
 {% endblock %}
 
@@ -151,24 +154,19 @@
   if (storedYAxis) {
     yAxisSelect.value = storedYAxis;
   }
-
   // Save selection when changed.
   yAxisSelect.addEventListener('change', function() {
     localStorage.setItem('simulator_yAxis', this.value);
     updateChart();
   });
 
-  // Save simulation log data
+  // Main Simulation Chart Data
   const simLog = {{ results.simulation_log | tojson }};
-  // Function to extract data for a given attribute from the simulation log.
   function getChartData(attribute) {
     return simLog.map(entry => entry[attribute] !== undefined ? entry[attribute] : null);
   }
-  // Extract step numbers (for x-axis)
   const steps = simLog.map(entry => entry.step);
-
-  // Create the chart with initial attribute from dropdown.
-  let currentAttribute = yAxisSelect.value;
+  let currentAttribute = yAxisSelect ? yAxisSelect.value : 'cumulative_profit';
   let datasetData = getChartData(currentAttribute);
 
   const ctx = document.getElementById('profitChart').getContext('2d');
@@ -207,7 +205,7 @@
 </script>
 
 <script>
-  // Function to update computed simulation fields when editable inputs change
+  // Update computed simulation fields when editable inputs change.
   function updateSimValues() {
     const finalPrice = parseFloat("{{ results.final_price }}");
     const size = parseFloat(document.getElementById("simSize").value) || 0;
@@ -220,5 +218,54 @@
   document.getElementById("simSize").addEventListener("input", updateSimValues);
   document.getElementById("simCollateral").addEventListener("input", updateSimValues);
   updateSimValues();
+</script>
+
+<script>
+  // Simulation Comparison Chart
+  // These variables (baseline_compare and tweaked_compare) should be passed from your view.
+  const baselineCompareData = {{ baseline_compare | default([]) | tojson }};
+  const tweakedCompareData = {{ tweaked_compare | tojson | default('[]') }};
+
+  // Extract x-axis (steps) and y-axis (cumulative profit) for each dataset.
+  const baselineSteps = baselineCompareData.map(entry => entry.step);
+  const baselineProfit = baselineCompareData.map(entry => entry.cumulative_profit);
+
+  const tweakedSteps = tweakedCompareData.map(entry => entry.step);
+  const tweakedProfit = tweakedCompareData.map(entry => entry.cumulative_profit);
+
+  const ctxCompare = document.getElementById('compareChart').getContext('2d');
+  const compareChart = new Chart(ctxCompare, {
+    type: 'line',
+    data: {
+      labels: baselineSteps, // assuming same number of steps for both simulations
+      datasets: [
+        {
+          label: 'Baseline Cumulative Profit',
+          data: baselineProfit,
+          borderColor: 'rgb(75, 192, 192)',
+          fill: false,
+          tension: 0.1
+        },
+        {
+          label: 'Tweaked (Collateral +10%) Cumulative Profit',
+          data: tweakedProfit,
+          borderColor: 'rgb(255, 99, 132)',
+          fill: false,
+          tension: 0.1
+        }
+      ]
+    },
+    options: {
+      scales: {
+        x: {
+          title: { display: true, text: 'Simulation Step (minute)' }
+        },
+        y: {
+          title: { display: true, text: 'Cumulative Profit' },
+          beginAtZero: true
+        }
+      }
+    }
+  });
 </script>
 {% endblock %}

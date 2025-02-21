@@ -92,6 +92,7 @@ app.register_blueprint(simulator_bp, url_prefix="/simulator")
 if "dashboard.index" in app.view_functions:
     app.add_url_rule("/dashboard", endpoint="dashboard", view_func=app.view_functions["dashboard.index"])
 
+
 # Global Routes for non-dashboard-specific functionality
 
 @app.route("/")
@@ -102,7 +103,42 @@ def index():
     selected = theme_config.get("selected_profile", "")
     if selected:
         theme = theme_config.get("profiles", {}).get(selected, {})
-    return render_template("base.html", theme=theme, title="Sonic Dashboard")
+
+    # Provide default parameters for the simulation template with numeric defaults.
+    params = {
+        'entry_price': 0.0,
+        'liquidation_price': 0.0,
+        'position_size': 0.0,
+        'position_side': 'long',
+        'rebalance_threshold': 0.0,
+        'hedging_cost_pct': 0.0,
+        'simulation_duration': 0.0,
+        'dt_minutes': 0.0,
+        'drift': 0.0,
+        'volatility': 0.0,
+        'collateral': 0.0
+    }
+    results = {
+        'cumulative_profit': 0,
+        'final_price': 0,
+        'simulation_log': []
+    }
+    baseline_compare = []
+    tweaked_compare = []
+    leverage = 0.0  # Default leverage value
+
+    return render_template(
+        "base.html",
+        theme=theme,
+        title="Sonic Dashboard",
+        params=params,
+        results=results,
+        baseline_compare=baseline_compare,
+        tweaked_compare=tweaked_compare,
+        leverage=leverage
+    )
+
+
 
 @app.route("/add_broker", methods=["POST"])
 def add_broker():
@@ -115,10 +151,12 @@ def add_broker():
     }
     try:
         dl.create_broker(broker_dict)
-        flash(f"Broker {broker_dict['name']} added successfully!", "success")
+    # flash(f"Broker {broker_dict['name']} added successfully!", "success")
     except Exception as e:
-        flash(f"Error adding broker: {e}", "danger")
+        # flash(f"Error adding broker: {e}", "danger")
+        print("")
     return redirect(url_for("assets"))
+
 
 @app.route("/delete_wallet/<wallet_name>", methods=["POST"])
 def delete_wallet(wallet_name):
@@ -135,6 +173,7 @@ def delete_wallet(wallet_name):
     except Exception as e:
         flash(f"Error deleting wallet: {e}", "danger")
     return redirect(url_for("assets"))
+
 
 @app.route("/add_wallet", methods=["POST"])
 def add_wallet():
@@ -160,6 +199,7 @@ def add_wallet():
         flash(f"Error adding wallet: {e}", "danger")
     return redirect(url_for("assets"))
 
+
 @app.route("/assets")
 def assets():
     dl = DataLocker.get_instance(DB_PATH)
@@ -176,11 +216,13 @@ def assets():
                            brokers=brokers,
                            wallets=wallets)
 
+
 @app.route("/exchanges")
 def exchanges():
     dl = DataLocker.get_instance(DB_PATH)
     brokers_data = dl.read_brokers()
     return render_template("exchanges.html", brokers=brokers_data)
+
 
 @app.route("/edit_wallet/<wallet_name>", methods=["GET", "POST"])
 def edit_wallet(wallet_name):
@@ -212,10 +254,12 @@ def edit_wallet(wallet_name):
             return redirect(url_for("assets"))
         return render_template("edit_wallet.html", wallet=wallet)
 
+
 @app.route("/console_view")
 def console_view():
     log_url = "https://www.pythonanywhere.com/user/BubbaDiego/files/var/log/www.deadlypanda.com.error.log"
     return render_template("console_view.html", log_url=log_url)
+
 
 @app.route("/api/get_config")
 def api_get_config():
@@ -226,6 +270,7 @@ def api_get_config():
     except Exception as e:
         logger.error("Error loading config: %s", e, exc_info=True)
         return jsonify({"error": str(e)}), 500
+
 
 @app.route("/save_theme", methods=["POST"])
 def save_theme_route():
@@ -252,6 +297,7 @@ def save_theme_route():
         current_app.logger.error("Error saving theme: %s", e, exc_info=True)
         return jsonify({"success": False, "error": str(e)}), 500
 
+
 @app.route('/api/update_row', methods=['POST'])
 def api_update_row():
     try:
@@ -277,6 +323,7 @@ def api_update_row():
         logger.exception("Error updating row")
         return jsonify({"error": str(e)}), 500
 
+
 @app.route('/api/delete_row', methods=['POST'])
 def api_delete_row():
     try:
@@ -300,6 +347,7 @@ def api_delete_row():
         logger.exception("Error deleting row")
         return jsonify({"error": str(e)}), 500
 
+
 @app.route('/database-viewer')
 def database_viewer():
     dl = DataLocker.get_instance()
@@ -318,6 +366,7 @@ def database_viewer():
     portfolio_data = []
     return render_template("database_viewer.html", db_data=db_data, portfolio_data=portfolio_data)
 
+
 @app.context_processor
 def update_theme_context():
     config_path = current_app.config.get("CONFIG_PATH", CONFIG_PATH)
@@ -333,18 +382,19 @@ def update_theme_context():
         theme = theme_config.get("profiles", {}).get(selected, {})
     return dict(theme=theme)
 
+
 # NEW: Global update route alias using the update_jupiter function from positions_bp.
-
-
 @app.route("/update", methods=["GET"])
 def update():
     from positions.positions_bp import update_jupiter  # Make sure update_jupiter is defined and returns a Response
     return update_jupiter()
 
+
 # NEW: Additional alias to allow "/dashboard/update" as well.
 @app.route("/dashboard/update", methods=["GET"])
 def dashboard_update():
     return update()
+
 
 if __name__ == "__main__":
     monitor = False
@@ -353,6 +403,7 @@ if __name__ == "__main__":
 
     if monitor:
         import subprocess
+
         try:
             CREATE_NEW_CONSOLE = 0x00000010  # Windows flag for new console window
             monitor_script = os.path.join(BASE_DIR, "local_monitor.py")

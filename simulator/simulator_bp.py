@@ -10,7 +10,7 @@ values such as leverage and cumulative profit. The simulation log is processed
 into chart data for visualization.
 """
 
-from flask import Blueprint, render_template, request, jsonify, current_app, url_for
+from flask import Blueprint, render_template, request, current_app, url_for
 import logging
 from simulator.simulation import PositionSimulator
 
@@ -55,9 +55,9 @@ def simulator_dashboard():
         entry_price=params["entry_price"],
         liquidation_price=params["liquidation_price"],
         position_size=params["position_size"],
+        collateral=params["collateral"],
         rebalance_threshold=params["rebalance_threshold"],
         hedging_cost_pct=params["hedging_cost_pct"],
-        collateral=params["collateral"],
         position_side=params["position_side"]
     )
 
@@ -93,89 +93,128 @@ def simulator_dashboard():
                            live_positions=live_positions)
 
 
+from flask import Blueprint, render_template, request
+import logging
+from simulator.simulation import PositionSimulator
+from data.data_locker import DataLocker
+from datetime import datetime
+
+simulator_bp = Blueprint('simulator', __name__, template_folder='templates')
+logger = logging.getLogger("SimulatorBP")
+
+
 @simulator_bp.route('/compare', methods=['GET', 'POST'])
 def compare_simulation():
-    # Default simulation parameters (all in minutes where applicable)
-    params = {
-        "entry_price": 10000,
-        "liquidation_price": 8000,
+    # Define default baseline simulation parameters.
+    baseline_params = {
+        "entry_price": 10000.0,
+        "liquidation_price": 8000.0,
         "position_size": 1.0,
         "collateral": 1000.0,
         "rebalance_threshold": -25.0,
         "hedging_cost_pct": 0.001,
-        "simulation_duration": 60,
+        "simulation_duration": 60,  # minutes
         "dt_minutes": 1,
         "drift": 0.05,
-        "volatility": 0.8
+        "volatility": 0.8,
+        "position_side": "long"
     }
 
-    # If the form is posted, update parameters
+    # Override defaults with POSTed form data, if available.
     if request.method == "POST":
         try:
-            params["entry_price"] = float(request.form.get("entry_price", params["entry_price"]))
-            params["liquidation_price"] = float(request.form.get("liquidation_price", params["liquidation_price"]))
-            params["position_size"] = float(request.form.get("position_size", params["position_size"]))
-            params["collateral"] = float(request.form.get("collateral", params["collateral"]))
-            params["rebalance_threshold"] = float(
-                request.form.get("rebalance_threshold", params["rebalance_threshold"]))
-            params["hedging_cost_pct"] = float(request.form.get("hedging_cost_pct", params["hedging_cost_pct"]))
-            params["simulation_duration"] = float(
-                request.form.get("simulation_duration", params["simulation_duration"]))
-            params["dt_minutes"] = float(request.form.get("dt_minutes", params["dt_minutes"]))
-            params["drift"] = float(request.form.get("drift", params["drift"]))
-            params["volatility"] = float(request.form.get("volatility", params["volatility"]))
+            baseline_params["entry_price"] = float(request.form.get("entry_price", baseline_params["entry_price"]))
+            baseline_params["liquidation_price"] = float(
+                request.form.get("liquidation_price", baseline_params["liquidation_price"]))
+            baseline_params["position_size"] = float(
+                request.form.get("position_size", baseline_params["position_size"]))
+            baseline_params["collateral"] = float(request.form.get("collateral", baseline_params["collateral"]))
+            baseline_params["rebalance_threshold"] = float(
+                request.form.get("rebalance_threshold", baseline_params["rebalance_threshold"]))
+            baseline_params["hedging_cost_pct"] = float(
+                request.form.get("hedging_cost_pct", baseline_params["hedging_cost_pct"]))
+            baseline_params["simulation_duration"] = float(
+                request.form.get("simulation_duration", baseline_params["simulation_duration"]))
+            baseline_params["dt_minutes"] = float(request.form.get("dt_minutes", baseline_params["dt_minutes"]))
+            baseline_params["drift"] = float(request.form.get("drift", baseline_params["drift"]))
+            baseline_params["volatility"] = float(request.form.get("volatility", baseline_params["volatility"]))
+            baseline_params["position_side"] = request.form.get("position_side",
+                                                                baseline_params["position_side"]).lower()
         except Exception as e:
             logger.error("Error parsing simulation parameters: %s", e)
 
-    # Run the simulation using your existing simulator (adjust if you want to add more options, such as side)
-    from simulator.simulation import PositionSimulator
-    simulator = PositionSimulator(
-        entry_price=params["entry_price"],
-        liquidation_price=params["liquidation_price"],
-        position_size=params["position_size"],
-        rebalance_threshold=params["rebalance_threshold"],
-        hedging_cost_pct=params["hedging_cost_pct"],
-        collateral=params["collateral"]
+    # Create tweaked parameters (for example, increasing collateral by 10%).
+    tweaked_params = baseline_params.copy()
+    tweaked_params["collateral"] = baseline_params["collateral"] * 1.10
+
+    # Run the baseline simulation.
+    baseline_simulator = PositionSimulator(
+        entry_price=baseline_params["entry_price"],
+        liquidation_price=baseline_params["liquidation_price"],
+        position_size=baseline_params["position_size"],
+        collateral=baseline_params["collateral"],
+        rebalance_threshold=baseline_params["rebalance_threshold"],
+        hedging_cost_pct=baseline_params["hedging_cost_pct"],
+        position_side=baseline_params["position_side"]
     )
-    sim_results = simulator.run_simulation(
-        simulation_duration=params["simulation_duration"],
-        dt_minutes=params["dt_minutes"],
-        drift=params["drift"],
-        volatility=params["volatility"]
+    baseline_results = baseline_simulator.run_simulation(
+        simulation_duration=baseline_params["simulation_duration"],
+        dt_minutes=baseline_params["dt_minutes"],
+        drift=baseline_params["drift"],
+        volatility=baseline_params["volatility"]
     )
-    leverage = (simulator.effective_entry_price * params["position_size"]) / params["collateral"]
 
-    # Prepare chart data for simulation (e.g., cumulative profit over time)
-    sim_chart_data = []
-    for log_entry in sim_results["simulation_log"]:
-        sim_chart_data.append({
-            "step": log_entry["step"],
-            "cumulative_profit": log_entry["cumulative_profit"],
-            "price": log_entry["price"],
-            "travel_percent": log_entry["travel_percent"],
-            "unrealized_pnl": log_entry["unrealized_pnl"]
-        })
+    # Run the tweaked simulation.
+    tweaked_simulator = PositionSimulator(
+        entry_price=tweaked_params["entry_price"],
+        liquidation_price=tweaked_params["liquidation_price"],
+        position_size=tweaked_params["position_size"],
+        collateral=tweaked_params["collateral"],
+        rebalance_threshold=tweaked_params["rebalance_threshold"],
+        hedging_cost_pct=tweaked_params["hedging_cost_pct"],
+        position_side=tweaked_params["position_side"]
+    )
+    tweaked_results = tweaked_simulator.run_simulation(
+        simulation_duration=tweaked_params["simulation_duration"],
+        dt_minutes=tweaked_params["dt_minutes"],
+        drift=tweaked_params["drift"],
+        volatility=tweaked_params["volatility"]
+    )
 
-    # Get real data from the database (using your existing PositionService and CalcServices)
-    from positions.position_service import PositionService
-    from utils.calc_services import CalcServices
-    real_positions = PositionService.get_all_positions()
-    real_totals = CalcServices().calculate_totals(real_positions)
+    # Prepare simulation chart data (e.g. step vs cumulative_profit).
+    baseline_chart = [[entry["step"], entry["cumulative_profit"]] for entry in baseline_results["simulation_log"]]
+    tweaked_chart = [[entry["step"], entry["cumulative_profit"]] for entry in tweaked_results["simulation_log"]]
+    chart_data = {
+        "simulated": baseline_chart,
+        "real": tweaked_chart  # For demonstration, using tweaked simulation as the "historical" series.
+    }
 
-    # (Optional) If you have snapshots/history data, you could also prepare a time-series chart
-    # for real data. For now, we pass the aggregated totals.
+    # Connect to the database to get historical data.
+    data_locker = DataLocker.get_instance()
+    # Fetch historical positions from the database.
+    historical_positions = data_locker.get_positions()
 
-    return render_template("simulator_compare.html",
-                           params=params,
-                           sim_results=sim_results,
-                           sim_chart_data=sim_chart_data,
-                           leverage=leverage,
-                           real_totals=real_totals,
-                           real_positions=real_positions)
+    # Fetch portfolio history (snapshots) and convert to chart series.
+    portfolio_history = data_locker.get_portfolio_history()
+    historical_chart = []
+    for entry in portfolio_history:
+        try:
+            # Convert ISO timestamp to a UNIX timestamp in milliseconds.
+            dt = datetime.fromisoformat(entry["snapshot_time"])
+            timestamp = int(dt.timestamp() * 1000)
+            historical_chart.append([timestamp, entry.get("total_value", 0.0)])
+        except Exception as e:
+            logger.error("Error processing portfolio snapshot: %s", e)
+    # Use historical_chart as the "real" data series if available.
+    if historical_chart:
+        chart_data["real"] = historical_chart
 
-
-if __name__ == "__main__":
-    from flask import Flask
-    app = Flask(__name__)
-    app.register_blueprint(simulator_bp, url_prefix="/simulator")
-    app.run(debug=True)
+    return render_template(
+        "compare.html",
+        chart_data=chart_data,
+        baseline_compare=baseline_chart,
+        tweaked_compare=tweaked_chart,
+        simulated_positions=[],  # You can set these if needed.
+        real_positions=historical_positions,
+        timeframe=24  # Example timeframe; adjust as needed.
+    )
