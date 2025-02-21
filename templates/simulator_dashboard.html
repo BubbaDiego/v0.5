@@ -1,271 +1,403 @@
+{% extends "base.html" %}
 
-{% block title %}Simulator Dashboard{% endblock %}
+{% block extra_styles %}
+<style>
+  /* Simulation Controls Styling */
+  #simulationControls {
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+  }
+  #simulationControls .control-group {
+    margin-bottom: 15px;
+  }
+  #simulationControls .control-label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  #simulationControls .slider-value {
+    font-weight: bold;
+    color: #007bff;
+  }
+
+  /* Chart Container Styling */
+  #dualChart {
+    height: 400px;
+    margin-bottom: 20px;
+  }
+
+  /* Table Styling (from compare.html) */
+  .table-responsive {
+    font-size: 0.8rem;
+  }
+  .table-responsive table {
+    width: 100%;
+  }
+  .table-responsive th,
+  .table-responsive td {
+    padding: 0.2rem 0.4rem;
+    line-height: 1.1;
+    max-width: 80px;
+    word-wrap: break-word;
+  }
+  .card-header {
+    background-color: {{ theme.get('sidebar', {}).get('bg', '#007bff') }};
+    color: white;
+  }
+  /* Force asset images to a consistent small size */
+  .asset-icon {
+    width: 30px !important;
+    height: 30px !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    object-fit: contain;
+  }
+  /* Optional: reduce space between title bar and page title */
+  .container-fluid h1 {
+    margin-top: 0;
+    margin-bottom: 0.375rem;
+  }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="container my-4">
-  <h2>Dynamic Hedging Simulator</h2>
-  <form method="post" action="{{ url_for('simulator.simulator_dashboard') }}">
-    <div class="row">
-      <div class="col-md-4 form-group">
-        <label for="entry_price">Entry Price:</label>
-        <input type="number" step="any" class="form-control" id="entry_price" name="entry_price" value="{{ params.entry_price }}">
-      </div>
-      <div class="col-md-4 form-group">
-        <label for="liquidation_price">Liquidation Price:</label>
-        <input type="number" step="any" class="form-control" id="liquidation_price" name="liquidation_price" value="{{ params.liquidation_price }}">
-      </div>
-      <div class="col-md-4 form-group">
-        <label for="position_size">Position Size:</label>
-        <input type="number" step="any" class="form-control" id="position_size" name="position_size" value="{{ params.position_size }}">
-      </div>
+<div class="container-fluid">
+  <h1 class="mb-4">Comparison: Simulated vs Historical Data</h1>
+
+  <!-- Simulation Controls -->
+  <form id="simulationControls">
+    <div class="control-group">
+      <label for="entryPrice" class="control-label">Entry Price:</label>
+      <input type="range" id="entryPrice" name="entry_price" min="5000" max="15000" step="100" value="10000" oninput="updateDisplay('entryPrice')">
+      <span id="entryPriceValue" class="slider-value">10000</span>
     </div>
-    <div class="row mt-2">
-      <div class="col-md-4 form-group">
-        <label for="position_side">Position Side:</label>
-        <select id="position_side" name="position_side" class="form-control">
-          <option value="long" {% if params.position_side == "long" %}selected{% endif %}>Long</option>
-          <option value="short" {% if params.position_side == "short" %}selected{% endif %}>Short</option>
-        </select>
-      </div>
-      <div class="col-md-4 form-group">
-        <label for="rebalance_threshold">Rebalance Threshold (%):</label>
-        <input type="number" step="any" class="form-control" id="rebalance_threshold" name="rebalance_threshold" value="{{ params.rebalance_threshold }}">
-      </div>
-      <div class="col-md-4 form-group">
-        <label for="hedging_cost_pct">Hedging Cost (decimal):</label>
-        <input type="number" step="any" class="form-control" id="hedging_cost_pct" name="hedging_cost_pct" value="{{ params.hedging_cost_pct }}">
-      </div>
+    <div class="control-group">
+      <label for="collateral" class="control-label">Collateral:</label>
+      <input type="range" id="collateral" name="collateral" min="500" max="5000" step="50" value="1000" oninput="updateDisplay('collateral')">
+      <span id="collateralValue" class="slider-value">1000</span>
     </div>
-    <div class="row mt-2">
-      <div class="col-md-4 form-group">
-        <label for="simulation_duration">Simulation Duration (minutes):</label>
-        <input type="number" step="any" class="form-control" id="simulation_duration" name="simulation_duration" value="{{ params.simulation_duration }}">
-      </div>
-      <div class="col-md-4 form-group">
-        <label for="dt_minutes">Time Step (minutes):</label>
-        <input type="number" step="any" class="form-control" id="dt_minutes" name="dt_minutes" value="{{ params.dt_minutes }}">
-      </div>
-      <div class="col-md-4 form-group">
-        <label for="drift">Annual Drift (e.g., 0.05 for 5%):</label>
-        <input type="number" step="any" class="form-control" id="drift" name="drift" value="{{ params.drift }}">
-      </div>
+    <div class="control-group">
+      <label for="simulationDuration" class="control-label">Simulation Duration (minutes):</label>
+      <input type="range" id="simulationDuration" name="simulation_duration" min="30" max="180" step="10" value="60" oninput="updateDisplay('simulationDuration')">
+      <span id="simulationDurationValue" class="slider-value">60</span>
     </div>
-    <div class="row mt-2">
-      <div class="col-md-4 form-group">
-        <label for="volatility">Annual Volatility (e.g., 0.8 for 80%):</label>
-        <input type="number" step="any" class="form-control" id="volatility" name="volatility" value="{{ params.volatility }}">
-      </div>
+    <div class="control-group">
+      <label for="drift" class="control-label">Drift (annual):</label>
+      <input type="range" id="drift" name="drift" min="0" max="0.2" step="0.01" value="0.05" oninput="updateDisplay('drift')">
+      <span id="driftValue" class="slider-value">0.05</span>
     </div>
-    <button type="submit" class="btn btn-primary mt-3">Run Simulation</button>
+    <div class="control-group">
+      <label for="volatility" class="control-label">Volatility (annual):</label>
+      <input type="range" id="volatility" name="volatility" min="0.1" max="1.5" step="0.1" value="0.8" oninput="updateDisplay('volatility')">
+      <span id="volatilityValue" class="slider-value">0.8</span>
+    </div>
+    <div class="control-group">
+      <label for="positionSide" class="control-label">Position Side:</label>
+      <select id="positionSide" name="position_side">
+        <option value="long" selected>Long</option>
+        <option value="short">Short</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label for="startDate" class="control-label">Start Date:</label>
+      <input type="date" id="startDate" name="start_date" value="{{ '%Y-%m-%d'|format(now()) }}">
+    </div>
+    <button type="button" class="btn btn-primary" onclick="runSimulation()">Run Simulation</button>
   </form>
 
-  <hr>
-  <!-- Simulation Positions Table -->
-  <div class="card mt-4">
-    <div class="card-header">
-      <h3 class="card-title">Simulation Position</h3>
-    </div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-bordered" id="simPositionsTable">
-          <thead>
-            <tr>
-              <th>Asset</th>
-              <th>Side</th>
-              <th>Profit</th>
-              <th>Collateral</th>
-              <th>Value</th>
-              <th>Size</th>
-              <th>Leverage</th>
-              <th>Dynamic Travel %</th>
-              <th>Static Travel %</th>
-              <th>Heat Index</th>
-              <th>Liq Distance</th>
-              <th>Wallet</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>BTC</td>
-              <td>
-                <select id="simSide" class="form-control" disabled>
-                  <option value="long" {% if params.position_side == "long" %}selected{% endif %}>Long</option>
-                  <option value="short" {% if params.position_side == "short" %}selected{% endif %}>Short</option>
-                </select>
-              </td>
-              <td><span id="simProfit">{{ results.cumulative_profit | round(2) }}</span></td>
-              <td>
-                <input type="number" step="any" id="simCollateral" value="{{ params.collateral }}" class="form-control" />
-              </td>
-              <td><span id="simValue">{{ (params.position_size * results.final_price) | round(2) }}</span></td>
-              <td>
-                <input type="number" step="any" id="simSize" value="{{ params.position_size }}" class="form-control" />
-              </td>
-              <td><span id="simLeverage">{{ leverage | round(2) }}</span></td>
-              <td><span id="simTravel">{% if results.simulation_log|length > 0 %}{{ results.simulation_log[-1].travel_percent | round(2) }}{% else %}N/A{% endif %}</span></td>
-              <td><span id="simStaticTravel">{% if results.simulation_log|length > 0 %}{{ results.simulation_log[-1].static_travel_percent | round(2) }}{% else %}N/A{% endif %}</span></td>
-              <td>N/A</td>
-              <td>N/A</td>
-              <td>Simulation</td>
-            </tr>
-          </tbody>
-        </table>
+  <!-- Dual Chart Container -->
+  <div id="dualChart"></div>
+
+  <!-- Positions Tables Section -->
+  <div class="row">
+    <!-- Simulated Positions Table -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Simulated Positions</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="simulatedPositionsTable">
+              <thead>
+                <tr>
+                  <th>Asset</th>
+                  <th>Type</th>
+                  <th>Profit</th>
+                  <th>Collateral</th>
+                  <th>Value</th>
+                  <th>Size</th>
+                  <th>Leverage</th>
+                  <th>Travel %</th>
+                  <th>Heat Index</th>
+                  <th>Liq Distance</th>
+                  <th>Wallet</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for pos in simulated_positions|sort(attribute='size', reverse=True) %}
+                <tr>
+                  <td>
+                    {% if pos.asset_type == 'BTC' %}
+                      <img src="{{ url_for('static', filename='images/btc_logo.png') }}" alt="BTC" class="asset-icon">
+                    {% elif pos.asset_type == 'ETH' %}
+                      <img src="{{ url_for('static', filename='images/eth_logo.png') }}" alt="ETH" class="asset-icon">
+                    {% elif pos.asset_type == 'SOL' %}
+                      <img src="{{ url_for('static', filename='images/sol_logo.png') }}" alt="SOL" class="asset-icon">
+                    {% else %}
+                      {{ pos.asset_type }}
+                    {% endif %}
+                  </td>
+                  <td><b>{{ pos.position_type }}</b></td>
+                  <td>
+                    {% if pos.pnl_after_fees_usd is defined and pos.pnl_after_fees_usd is not none %}
+                      {{ "{:,.2f}".format(pos.pnl_after_fees_usd) }}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>{{ "{:,.2f}".format(pos.collateral) }}</td>
+                  <td>{{ "{:,.2f}".format(pos.value) }}</td>
+                  <td>{{ "{:,.2f}".format(pos.size) }}</td>
+                  <td>{{ "{:,.2f}".format(pos.leverage) }}</td>
+                  <td>
+                    {% if pos.current_travel_percent is not none %}
+                      {{ "{:,.2f}".format(pos.current_travel_percent) }}%
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if pos.heat_index is not none %}
+                      {{ "{:,.2f}".format(pos.heat_index) }}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if pos.liquidation_distance is not none %}
+                      {{ "{:,.2f}".format(pos.liquidation_distance) }}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if pos.wallet_image %}
+                      <img src="{{ url_for('static', filename='images/' ~ pos.wallet_image) }}" alt="Wallet Image" class="wallet-img">
+                    {% else %}
+                      Unknown
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                {% set sim_total_profit = simulated_positions|sum(attribute='pnl_after_fees_usd') %}
+                <tr style="font-weight: bold; text-align: center;">
+                  <td>TOTALS</td>
+                  <td></td>
+                  <td>{{ "{:,.2f}".format(sim_total_profit) }}</td>
+                  <td><!-- Total collateral --></td>
+                  <td><!-- Total value --></td>
+                  <td><!-- Total size --></td>
+                  <td><!-- Avg leverage --></td>
+                  <td><!-- Avg travel percent --></td>
+                  <td><!-- Avg heat index --></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Chart Canvas for the Main Simulation -->
-  <div class="row mt-4">
-    <div class="col-md-12">
-      <canvas id="profitChart" width="400" height="200"></canvas>
-    </div>
-  </div>
-
-  <!-- Simulation Results Summary -->
-  <hr>
-  <h3>Simulation Results Summary</h3>
-  <p><strong>Final Price:</strong> {{ results.final_price }}</p>
-  <p><strong>Rebalances Executed:</strong> {{ results.rebalance_count }}</p>
-  <p><strong>Cumulative Profit from Rebalances:</strong> {{ results.cumulative_profit }}</p>
-  <p><strong>Final Total Profit (incl. Unrealized PnL):</strong> {{ results.total_profit }}</p>
-
-  <!-- New: Simulation Comparison Section -->
-  <hr>
-  <h3>Simulation Comparison</h3>
-  <p>
-    Baseline Collateral: {{ params.collateral }}<br>
-    Tweaked Collateral (+10%): {{ params.collateral * 1.10 }}
-  </p>
-  <div class="row mt-4">
-    <div class="col-md-12">
-      <canvas id="compareChart" width="800" height="400"></canvas>
+    <!-- Historical Positions Table -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Historical Positions</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="historicalPositionsTable">
+              <thead>
+                <tr>
+                  <th>Asset</th>
+                  <th>Type</th>
+                  <th>Profit</th>
+                  <th>Collateral</th>
+                  <th>Value</th>
+                  <th>Size</th>
+                  <th>Leverage</th>
+                  <th>Travel %</th>
+                  <th>Heat Index</th>
+                  <th>Liq Distance</th>
+                  <th>Wallet</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for pos in real_positions|sort(attribute='size', reverse=True) %}
+                <tr>
+                  <td>
+                    {% if pos.asset_type == 'BTC' %}
+                      <img src="{{ url_for('static', filename='images/btc_logo.png') }}" alt="BTC" class="asset-icon">
+                    {% elif pos.asset_type == 'ETH' %}
+                      <img src="{{ url_for('static', filename='images/eth_logo.png') }}" alt="ETH" class="asset-icon">
+                    {% elif pos.asset_type == 'SOL' %}
+                      <img src="{{ url_for('static', filename='images/sol_logo.png') }}" alt="SOL" class="asset-icon">
+                    {% else %}
+                      {{ pos.asset_type }}
+                    {% endif %}
+                  </td>
+                  <td><b>{{ pos.position_type }}</b></td>
+                  <td>
+                    {% if pos.pnl_after_fees_usd is defined and pos.pnl_after_fees_usd is not none %}
+                      {{ "{:,.2f}".format(pos.pnl_after_fees_usd) }}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>{{ "{:,.2f}".format(pos.collateral) }}</td>
+                  <td>{{ "{:,.2f}".format(pos.value) }}</td>
+                  <td>{{ "{:,.2f}".format(pos.size) }}</td>
+                  <td>{{ "{:,.2f}".format(pos.leverage) }}</td>
+                  <td>
+                    {% if pos.current_travel_percent is not none %}
+                      {{ "{:,.2f}".format(pos.current_travel_percent) }}%
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if pos.heat_index is not none %}
+                      {{ "{:,.2f}".format(pos.heat_index) }}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if pos.liquidation_distance is not none %}
+                      {{ "{:,.2f}".format(pos.liquidation_distance) }}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if pos.wallet_image %}
+                      <img src="{{ url_for('static', filename='images/' ~ pos.wallet_image) }}" alt="Wallet Image" class="wallet-img">
+                    {% else %}
+                      Unknown
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                {% set real_total_profit = real_positions|sum(attribute='pnl_after_fees_usd') %}
+                <tr style="font-weight: bold; text-align: center;">
+                  <td>TOTALS</td>
+                  <td></td>
+                  <td>{{ "{:,.2f}".format(real_total_profit) }}</td>
+                  <td><!-- Total collateral --></td>
+                  <td><!-- Total value --></td>
+                  <td><!-- Total size --></td>
+                  <td><!-- Avg leverage --></td>
+                  <td><!-- Avg travel percent --></td>
+                  <td><!-- Avg heat index --></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 {% endblock %}
 
 {% block extra_scripts %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 <script>
-  // Persist Y-Axis selection using localStorage.
-  const yAxisSelect = document.getElementById('yAxisSelect');
-  // On page load, set selection from localStorage if available.
-  const storedYAxis = localStorage.getItem('simulator_yAxis');
-  if (storedYAxis) {
-    yAxisSelect.value = storedYAxis;
+  // Function to update slider display values.
+  function updateDisplay(controlId) {
+    var control = document.getElementById(controlId);
+    var display = document.getElementById(controlId + "Value");
+    display.textContent = control.value;
   }
-  // Save selection when changed.
-  yAxisSelect.addEventListener('change', function() {
-    localStorage.setItem('simulator_yAxis', this.value);
-    updateChart();
-  });
 
-  // Main Simulation Chart Data
-  const simLog = {{ results.simulation_log | tojson }};
-  function getChartData(attribute) {
-    return simLog.map(entry => entry[attribute] !== undefined ? entry[attribute] : null);
-  }
-  const steps = simLog.map(entry => entry.step);
-  let currentAttribute = yAxisSelect ? yAxisSelect.value : 'cumulative_profit';
-  let datasetData = getChartData(currentAttribute);
-
-  const ctx = document.getElementById('profitChart').getContext('2d');
-  const profitChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: steps,
-      datasets: [{
-        label: currentAttribute.replace('_', ' ').toUpperCase(),
-        data: datasetData,
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      }]
+  // Initialize the dual chart with ApexCharts.
+  var dualChart = new ApexCharts(document.querySelector("#dualChart"), {
+    chart: {
+      type: 'line',
+      height: 400,
+      zoom: { enabled: false }
     },
-    options: {
-      scales: {
-        x: {
-          title: { display: true, text: 'Simulation Step (minute)' }
-        },
-        y: {
-          title: { display: true, text: currentAttribute.replace('_', ' ').toUpperCase() }
+    series: [
+      { name: 'Simulated', data: [] },
+      { name: 'Historical', data: [] }
+    ],
+    xaxis: {
+      type: 'datetime',
+      title: { text: 'Time' }
+    },
+    yaxis: {
+      title: { text: 'Value' },
+      labels: {
+        formatter: function(val) {
+          return Number(val).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
       }
-    }
-  });
-
-  function updateChart() {
-    currentAttribute = yAxisSelect.value;
-    datasetData = getChartData(currentAttribute);
-    profitChart.data.datasets[0].data = datasetData;
-    profitChart.data.datasets[0].label = currentAttribute.replace('_', ' ').toUpperCase();
-    profitChart.options.scales.y.title.text = currentAttribute.replace('_', ' ').toUpperCase();
-    profitChart.update();
-  }
-</script>
-
-<script>
-  // Update computed simulation fields when editable inputs change.
-  function updateSimValues() {
-    const finalPrice = parseFloat("{{ results.final_price }}");
-    const size = parseFloat(document.getElementById("simSize").value) || 0;
-    const collateral = parseFloat(document.getElementById("simCollateral").value) || 1;
-    const value = size * finalPrice;
-    const leverage = collateral !== 0 ? (value / collateral) : 0;
-    document.getElementById("simValue").innerText = value.toFixed(2);
-    document.getElementById("simLeverage").innerText = leverage.toFixed(2);
-  }
-  document.getElementById("simSize").addEventListener("input", updateSimValues);
-  document.getElementById("simCollateral").addEventListener("input", updateSimValues);
-  updateSimValues();
-</script>
-
-<script>
-  // Simulation Comparison Chart
-  // These variables (baseline_compare and tweaked_compare) should be passed from your view.
-  const baselineCompareData = {{ baseline_compare | default([]) | tojson }};
-  const tweakedCompareData = {{ tweaked_compare | tojson | default('[]') }};
-
-  // Extract x-axis (steps) and y-axis (cumulative profit) for each dataset.
-  const baselineSteps = baselineCompareData.map(entry => entry.step);
-  const baselineProfit = baselineCompareData.map(entry => entry.cumulative_profit);
-
-  const tweakedSteps = tweakedCompareData.map(entry => entry.step);
-  const tweakedProfit = tweakedCompareData.map(entry => entry.cumulative_profit);
-
-  const ctxCompare = document.getElementById('compareChart').getContext('2d');
-  const compareChart = new Chart(ctxCompare, {
-    type: 'line',
-    data: {
-      labels: baselineSteps, // assuming same number of steps for both simulations
-      datasets: [
-        {
-          label: 'Baseline Cumulative Profit',
-          data: baselineProfit,
-          borderColor: 'rgb(75, 192, 192)',
-          fill: false,
-          tension: 0.1
-        },
-        {
-          label: 'Tweaked (Collateral +10%) Cumulative Profit',
-          data: tweakedProfit,
-          borderColor: 'rgb(255, 99, 132)',
-          fill: false,
-          tension: 0.1
-        }
-      ]
     },
-    options: {
-      scales: {
-        x: {
-          title: { display: true, text: 'Simulation Step (minute)' }
-        },
-        y: {
-          title: { display: true, text: 'Cumulative Profit' },
-          beginAtZero: true
-        }
-      }
+    title: {
+      text: 'Simulated vs Historical Data Comparison',
+      align: 'center'
     }
   });
+  dualChart.render();
+
+  // Function to run simulation via AJAX and update the chart.
+  function runSimulation() {
+    var params = {
+      entry_price: parseFloat(document.getElementById("entryPrice").value),
+      collateral: parseFloat(document.getElementById("collateral").value),
+      simulation_duration: parseFloat(document.getElementById("simulationDuration").value),
+      drift: parseFloat(document.getElementById("drift").value),
+      volatility: parseFloat(document.getElementById("volatility").value),
+      position_side: document.getElementById("positionSide").value,
+      start_date: document.getElementById("startDate").value
+    };
+
+    fetch('/simulator/simulation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params)
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Update the "Simulated" series in the chart with new simulation data.
+      var simulationData = data.results.simulation_log.map(entry => {
+        // Assume 'step' is used as the x-axis value; you could use a timestamp if available.
+        // Here we convert 'step' to a number and simulate a datetime by adding minutes to the current time.
+        var now = new Date().getTime();
+        // For simplicity, assume each step represents one minute.
+        var timestamp = now + entry.step * 60000;
+        return [timestamp, entry.cumulative_profit];
+      });
+      dualChart.updateSeries([
+        { name: 'Simulated', data: simulationData },
+        // Historical series remains unchanged.
+        { name: 'Historical', data: dualChart.w.config.series[1].data }
+      ]);
+    })
+    .catch(error => {
+      console.error("Error running simulation:", error);
+    });
+  }
 </script>
 {% endblock %}

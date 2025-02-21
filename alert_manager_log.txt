@@ -1627,3 +1627,123 @@
 2025-02-20 14:08:14,848 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
 2025-02-20 14:08:14,848 - AlertManagerLogger - INFO - Found 0 active price alerts.
 2025-02-20 14:08:14,848 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-20 14:21:41,035 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 14:21:42,468 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 14:21:50,682 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-20 14:21:50,682 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-20 14:21:50,682 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-20 14:23:19,478 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 14:27:10,535 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 14:41:29,615 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 14:41:31,027 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 14:50:04,492 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-20 14:50:04,492 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-20 14:50:04,492 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-20 14:52:20,024 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 14:52:21,503 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:09:12,774 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:12:22,564 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:13:08,786 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:15:43,556 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:17:27,693 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:17:29,134 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:23:52,491 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:23:53,947 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:31:02,449 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:31:03,912 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:31:30,433 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:31:31,779 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:31:34,513 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:31:36,056 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:32:29,955 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:32:31,382 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:35:57,132 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:35:58,559 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:37:16,670 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:37:18,130 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:38:10,405 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:38:11,835 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:48:32,655 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:49:59,414 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:56:01,184 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:56:02,661 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:56:21,089 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:56:22,538 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:58:56,589 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:58:58,086 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 15:59:10,856 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-20 15:59:10,857 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-20 15:59:10,857 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-20 16:01:29,488 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:01:30,977 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:01:43,391 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-20 16:01:43,391 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-20 16:01:43,391 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-20 16:04:46,466 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-20 16:04:46,466 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-20 16:04:46,466 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-20 16:06:13,753 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:06:15,232 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:06:26,950 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-20 16:06:26,951 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-20 16:06:26,951 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-20 16:08:26,524 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:08:27,936 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:09:38,055 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:09:39,497 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:15:26,582 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:15:32,700 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:15:34,195 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:19:47,809 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:19:49,318 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:27:06,203 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:27:07,730 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:27:31,061 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:27:32,508 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:31:46,553 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:31:48,031 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:33:52,381 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:33:53,813 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:34:04,074 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-20 16:34:04,075 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-20 16:34:04,075 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-20 16:44:17,869 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:44:19,353 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:44:26,448 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-20 16:44:26,448 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-20 16:44:26,448 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-20 16:51:15,523 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:51:17,043 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:57:16,983 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 16:57:18,450 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:03:09,687 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:03:11,135 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:05:24,943 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:08:33,713 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:08:35,159 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:20:55,479 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:21:22,289 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:21:23,738 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:25:18,900 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:25:20,390 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:42:29,149 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:42:30,687 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:45:57,852 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:46:07,907 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:46:09,401 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:47:30,435 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-20 17:47:30,436 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-20 17:47:30,436 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-20 17:59:58,027 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 17:59:59,505 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 18:00:16,129 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-20 18:00:16,129 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-20 18:00:16,129 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-20 18:08:48,226 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-20 18:08:48,226 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-20 18:08:48,226 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-20 18:22:39,585 - AlertManagerLogger - INFO - Checking 0 positions for alerts.
+2025-02-20 18:22:39,585 - AlertManagerLogger - INFO - Found 0 active price alerts.
+2025-02-20 18:22:39,585 - AlertManagerLogger - INFO - No alerts triggered.
+2025-02-20 18:24:13,089 - AlertManagerLogger - INFO - AlertManager initialized.
+2025-02-20 18:24:14,577 - AlertManagerLogger - INFO - AlertManager initialized.

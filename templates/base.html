@@ -105,10 +105,10 @@
 
       <!-- Sidebar -->
       <aside class="app-sidebar shadow" style="
-        {% if theme.get('side_bar') and theme.side_bar.get('image') %}
-          background-image: url('{{ url_for('static', filename=theme.side_bar.image) }}');
+        {% if theme.get('sidebar') and theme.sidebar.get('image') %}
+          background-image: url('{{ url_for('static', filename=theme.sidebar.image) }}');
         {% else %}
-          background-color: {{ theme.get('side_bar', {}).get('color', '#C70039') }};
+          background-color: {{ theme.get('sidebar', {}).get('color', '#C70039') }};
         {% endif %}
         ">
         <div class="sidebar-brand">

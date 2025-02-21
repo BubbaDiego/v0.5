@@ -11,10 +11,44 @@
     margin-top: 0;
     margin-bottom: 0.375rem;
   }
+  /* Simulation Controls Styling */
+  #simulationControls {
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+  }
+  #simulationControls .control-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+  }
+  #simulationControls .control-label {
+    font-weight: bold;
+    margin-right: 10px;
+    width: 150px;
+  }
+  #simulationControls input[type="range"] {
+    flex-grow: 1;
+    margin-right: 10px;
+    min: 0;
+  }
+  #simulationControls input[type="number"] {
+    width: 80px;
+  }
+  #simulationControls fieldset {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+  #simulationControls legend {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
   /* Chart styling */
   #dualChart {
-    max-width: 100%;
-    margin: 0 auto;
+    height: 400px;
+    margin-bottom: 20px;
   }
   /* Card and table styling */
   .card {
@@ -37,12 +71,10 @@
     max-width: 80px;
     word-wrap: break-word;
   }
-  /* Override asset image size */
+  /* Force asset images to a consistent size */
   .asset-icon {
     width: 30px !important;
     height: 30px !important;
-    max-width: 30px !important;
-    max-height: 30px !important;
     object-fit: contain;
   }
 </style>
@@ -52,19 +84,70 @@
 <div class="container-fluid">
   <h1 class="mb-4">Comparison: Simulated vs Historical Data</h1>
 
-  <!-- Dual Line Chart Section -->
-  <div class="row">
-    <div class="col-md-12 mb-4">
-      <div class="card">
-        <div class="card-header">
-          <strong>Simulated vs Historical Data Chart</strong>
-        </div>
-        <div class="card-body">
-          <div id="dualChart"></div>
-        </div>
-      </div>
+  <!-- Simulation Controls -->
+  <form id="simulationControls">
+    <!-- Entry Price -->
+    <div class="control-group">
+      <label for="entryPrice" class="control-label">Entry Price:</label>
+      <input type="range" id="entryPrice" name="entry_price" min="0" max="15000" step="100" value="10000" oninput="syncControl('entryPrice')">
+      <input type="number" id="entryPriceNumber" value="10000" oninput="syncControl('entryPrice', 'number')">
     </div>
-  </div>
+    <!-- Collateral -->
+    <div class="control-group">
+      <label for="collateral" class="control-label">Collateral:</label>
+      <input type="range" id="collateral" name="collateral" min="0" max="5000" step="50" value="1000" oninput="syncControl('collateral')">
+      <input type="number" id="collateralNumber" value="1000" oninput="syncControl('collateral', 'number')">
+    </div>
+    <!-- Simulation Duration -->
+    <div class="control-group">
+      <label for="simulationDuration" class="control-label">Duration (min):</label>
+      <input type="range" id="simulationDuration" name="simulation_duration" min="0" max="180" step="10" value="60" oninput="syncControl('simulationDuration')">
+      <input type="number" id="simulationDurationNumber" value="60" oninput="syncControl('simulationDuration', 'number')">
+    </div>
+    <!-- Step Duration (dt_minutes) -->
+    <div class="control-group">
+      <label for="dtMinutes" class="control-label">Step Duration (min):</label>
+      <input type="range" id="dtMinutes" name="dt_minutes" min="0" max="10" step="0.5" value="1" oninput="syncControl('dtMinutes')">
+      <input type="number" id="dtMinutesNumber" value="1" oninput="syncControl('dtMinutes', 'number')">
+    </div>
+    <!-- Drift -->
+    <div class="control-group">
+      <label for="drift" class="control-label">Drift (annual):</label>
+      <input type="range" id="drift" name="drift" min="0" max="0.2" step="0.01" value="0.05" oninput="syncControl('drift')">
+      <input type="number" id="driftNumber" value="0.05" step="0.01" oninput="syncControl('drift', 'number')">
+    </div>
+    <!-- Volatility -->
+    <div class="control-group">
+      <label for="volatility" class="control-label">Volatility (annual):</label>
+      <input type="range" id="volatility" name="volatility" min="0" max="1.5" step="0.1" value="0.8" oninput="syncControl('volatility')">
+      <input type="number" id="volatilityNumber" value="0.8" step="0.1" oninput="syncControl('volatility', 'number')">
+    </div>
+    <!-- Position Side -->
+    <div class="control-group">
+      <label for="positionSide" class="control-label">Position Side:</label>
+      <select id="positionSide" name="position_side">
+        <option value="long" selected>Long</option>
+        <option value="short">Short</option>
+      </select>
+    </div>
+    <!-- Start Date -->
+    <div class="control-group">
+      <label for="startDate" class="control-label">Start Date:</label>
+      <input type="date" id="startDate" name="start_date" value="{{ now.strftime('%Y-%m-%d') }}">
+    </div>
+    <!-- Y-Axis Selection -->
+    <fieldset id="yAxisSelection">
+      <legend>Select Y-Axis Data:</legend>
+      <label><input type="radio" name="y_axis" value="cumulative_profit" checked> Cumulative Profit</label>
+      <label><input type="radio" name="y_axis" value="travel_percent"> Travel %</label>
+      <label><input type="radio" name="y_axis" value="price"> Price</label>
+      <label><input type="radio" name="y_axis" value="unrealized_pnl"> Unrealized PnL</label>
+    </fieldset>
+    <button type="button" class="btn btn-primary" onclick="runSimulation()">Run Simulation</button>
+  </form>
+
+  <!-- Dual Chart Section -->
+  <div id="dualChart"></div>
 
   <!-- Positions Tables Section -->
   <div class="row">
@@ -179,7 +262,7 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-bordered" id="realPositionsTable">
+            <table class="table table-bordered" id="historicalPositionsTable">
               <thead>
                 <tr>
                   <th>Asset</th>
@@ -278,34 +361,39 @@
 {% endblock %}
 
 {% block extra_scripts %}
-<!-- Include ApexCharts from CDN -->
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 <script>
-  // Chart data is passed from the backend as chart_data, safely defaulted if undefined
-  var chartData = {{ chart_data | default({'simulated': [], 'real': []}) | tojson }};
+  // Function to synchronize slider and number inputs.
+  function syncControl(controlId, type) {
+    var slider = document.getElementById(controlId);
+    var numberInput = document.getElementById(controlId + "Number");
+    if (type === 'number') {
+      // If user types a value in the number input, update the slider.
+      slider.value = numberInput.value;
+    } else {
+      // If slider changes, update the number input.
+      numberInput.value = slider.value;
+    }
+  }
 
-  var options = {
+  // Initialize the dual chart with ApexCharts.
+  var dualChart = new ApexCharts(document.querySelector("#dualChart"), {
     chart: {
       type: 'line',
-      height: 350,
+      height: 400,
       zoom: { enabled: false }
     },
-    stroke: { curve: 'smooth', width: 3 },
-    markers: { size: 0 },
     series: [
-      { name: 'Simulated', data: chartData.simulated },
-      { name: 'Historical', data: chartData.real }
+      { name: 'Simulated', data: [] },
+      { name: 'Historical', data: [] }
     ],
     xaxis: {
       type: 'datetime',
-      labels: {
-        formatter: function(val) {
-          return new Date(val).toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit' });
-        }
-      }
+      title: { text: 'Time' }
     },
     yaxis: {
+      title: { text: 'Value' },
       labels: {
         formatter: function(val) {
           return Number(val).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -322,12 +410,47 @@
     },
     title: {
       text: 'Simulated vs Historical Data Comparison',
-      align: 'center',
-      style: { fontSize: '16px', fontWeight: 'bold' }
+      align: 'center'
     }
-  };
-
-  var dualChart = new ApexCharts(document.querySelector("#dualChart"), options);
+  });
   dualChart.render();
+
+  // Function to run simulation via AJAX and update the chart.
+  function runSimulation() {
+    var params = {
+      entry_price: parseFloat(document.getElementById("entryPrice").value),
+      collateral: parseFloat(document.getElementById("collateral").value),
+      simulation_duration: parseFloat(document.getElementById("simulationDuration").value),
+      dt_minutes: parseFloat(document.getElementById("dtMinutes").value),
+      drift: parseFloat(document.getElementById("drift").value),
+      volatility: parseFloat(document.getElementById("volatility").value),
+      position_side: document.getElementById("positionSide").value,
+      start_date: document.getElementById("startDate").value
+    };
+
+    // Get selected y-axis field from radio buttons.
+    var yAxisOption = document.querySelector('input[name="y_axis"]:checked').value;
+
+    fetch('/simulator/simulation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params)
+    })
+    .then(response => response.json())
+    .then(data => {
+      var simulationData = data.results.simulation_log.map(entry => {
+        var now = new Date().getTime();
+        var timestamp = now + entry.step * 60000;
+        return [timestamp, entry[yAxisOption]];
+      });
+      dualChart.updateSeries([
+        { name: 'Simulated', data: simulationData },
+        { name: 'Historical', data: dualChart.w.config.series[1].data }
+      ]);
+    })
+    .catch(error => {
+      console.error("Error running simulation:", error);
+    });
+  }
 </script>
 {% endblock %}
