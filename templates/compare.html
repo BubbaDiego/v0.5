@@ -77,52 +77,50 @@
     height: 30px !important;
     object-fit: contain;
   }
+  /* Style for the Load Current Positions button */
+  #loadPositionsBtn {
+    margin-left: 10px;
+  }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid">
   <h1 class="mb-4">Comparison: Simulated vs Historical Data</h1>
-
+<!-- Debug output for simulated_positions -->
+  <pre>{{ simulated_positions|tojson }}</pre>
   <!-- Simulation Controls -->
   <form id="simulationControls">
-    <!-- Entry Price -->
     <div class="control-group">
       <label for="entryPrice" class="control-label">Entry Price:</label>
       <input type="range" id="entryPrice" name="entry_price" min="0" max="15000" step="100" value="10000" oninput="syncControl('entryPrice')">
       <input type="number" id="entryPriceNumber" value="10000" oninput="syncControl('entryPrice', 'number')">
     </div>
-    <!-- Collateral -->
     <div class="control-group">
       <label for="collateral" class="control-label">Collateral:</label>
       <input type="range" id="collateral" name="collateral" min="0" max="5000" step="50" value="1000" oninput="syncControl('collateral')">
       <input type="number" id="collateralNumber" value="1000" oninput="syncControl('collateral', 'number')">
     </div>
-    <!-- Simulation Duration -->
     <div class="control-group">
       <label for="simulationDuration" class="control-label">Duration (min):</label>
       <input type="range" id="simulationDuration" name="simulation_duration" min="0" max="180" step="10" value="60" oninput="syncControl('simulationDuration')">
       <input type="number" id="simulationDurationNumber" value="60" oninput="syncControl('simulationDuration', 'number')">
     </div>
-    <!-- Step Duration (dt_minutes) -->
     <div class="control-group">
       <label for="dtMinutes" class="control-label">Step Duration (min):</label>
       <input type="range" id="dtMinutes" name="dt_minutes" min="0" max="10" step="0.5" value="1" oninput="syncControl('dtMinutes')">
       <input type="number" id="dtMinutesNumber" value="1" oninput="syncControl('dtMinutes', 'number')">
     </div>
-    <!-- Drift -->
     <div class="control-group">
       <label for="drift" class="control-label">Drift (annual):</label>
       <input type="range" id="drift" name="drift" min="0" max="0.2" step="0.01" value="0.05" oninput="syncControl('drift')">
       <input type="number" id="driftNumber" value="0.05" step="0.01" oninput="syncControl('drift', 'number')">
     </div>
-    <!-- Volatility -->
     <div class="control-group">
       <label for="volatility" class="control-label">Volatility (annual):</label>
       <input type="range" id="volatility" name="volatility" min="0" max="1.5" step="0.1" value="0.8" oninput="syncControl('volatility')">
       <input type="number" id="volatilityNumber" value="0.8" step="0.1" oninput="syncControl('volatility', 'number')">
     </div>
-    <!-- Position Side -->
     <div class="control-group">
       <label for="positionSide" class="control-label">Position Side:</label>
       <select id="positionSide" name="position_side">
@@ -130,12 +128,10 @@
         <option value="short">Short</option>
       </select>
     </div>
-    <!-- Start Date -->
     <div class="control-group">
       <label for="startDate" class="control-label">Start Date:</label>
       <input type="date" id="startDate" name="start_date" value="{{ now.strftime('%Y-%m-%d') }}">
     </div>
-    <!-- Y-Axis Selection -->
     <fieldset id="yAxisSelection">
       <legend>Select Y-Axis Data:</legend>
       <label><input type="radio" name="y_axis" value="cumulative_profit" checked> Cumulative Profit</label>
@@ -143,7 +139,10 @@
       <label><input type="radio" name="y_axis" value="price"> Price</label>
       <label><input type="radio" name="y_axis" value="unrealized_pnl"> Unrealized PnL</label>
     </fieldset>
-    <button type="button" class="btn btn-primary" onclick="runSimulation()">Run Simulation</button>
+    <div class="control-group">
+      <button type="button" class="btn btn-primary" onclick="runSimulation()">Run Simulation</button>
+      <button type="button" id="loadPositionsBtn" class="btn btn-secondary" onclick="loadCurrentPositions()">Load Current Positions</button>
+    </div>
   </form>
 
   <!-- Dual Chart Section -->
@@ -369,10 +368,8 @@
     var slider = document.getElementById(controlId);
     var numberInput = document.getElementById(controlId + "Number");
     if (type === 'number') {
-      // If user types a value in the number input, update the slider.
       slider.value = numberInput.value;
     } else {
-      // If slider changes, update the number input.
       numberInput.value = slider.value;
     }
   }
@@ -428,7 +425,6 @@
       start_date: document.getElementById("startDate").value
     };
 
-    // Get selected y-axis field from radio buttons.
     var yAxisOption = document.querySelector('input[name="y_axis"]:checked').value;
 
     fetch('/simulator/simulation', {
@@ -451,6 +447,29 @@
     .catch(error => {
       console.error("Error running simulation:", error);
     });
+  }
+
+  // Function to load current positions from the backend and update controls.
+  function loadCurrentPositions() {
+    fetch('/simulator/load_current_positions')
+      .then(response => response.json())
+      .then(data => {
+        if(data.positions && data.positions.length > 0) {
+          // For example, update controls based on the first position.
+          var pos = data.positions[0];
+          document.getElementById("entryPrice").value = pos.entry_price;
+          document.getElementById("entryPriceNumber").value = pos.entry_price;
+          document.getElementById("collateral").value = pos.collateral;
+          document.getElementById("collateralNumber").value = pos.collateral;
+          document.getElementById("positionSide").value = pos.position_type.toLowerCase();
+          alert("Current positions loaded into simulation controls.");
+        } else {
+          alert("No current positions found.");
+        }
+      })
+      .catch(error => {
+        console.error("Error loading current positions:", error);
+      });
   }
 </script>
 {% endblock %}

@@ -5,18 +5,48 @@ simulator_bp.py
 This blueprint integrates the dynamic hedging/gamma scalping simulation engine
 with a web dashboard. Users can input simulation parameters (collateral, position size,
 entry price, liquidation price, rebalance threshold, hedging cost, simulation duration,
-time step, drift, volatility, position side, etc.) via interactive controls and view live-updated
+time step, drift, volatility, position side, etc.) via interactive controls and view live‑updated
 charts comparing simulated results with historical data pulled from the database via DataLocker.
 """
 
 from flask import Blueprint, render_template, request, current_app, url_for, jsonify
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from simulator.simulation import PositionSimulator
 from data.data_locker import DataLocker
 
 simulator_bp = Blueprint('simulator', __name__, template_folder='templates')
 logger = logging.getLogger("SimulatorBP")
+
+def generate_simulated_position(sim_results):
+    """
+    Generates a simulated position summary from the simulation log.
+    This summary uses the final step to compute a dollar value ("size") of the holding.
+    """
+    if sim_results.get("simulation_log"):
+        final_step = sim_results["simulation_log"][-1]
+        # Compute the dollar value of the holding.
+        # Here, position_size is assumed to be the number of units,
+        # so value = price * units.
+        value = final_step.get("price", 0.0) * sim_results.get("position_size", 1.0)
+        # Leverage is computed as value divided by collateral.
+        leverage = value / sim_results.get("collateral", 1000.0)
+        simulated_position = {
+            "asset_type": "BTC",  # Adjust as needed or derive from input.
+            "position_type": "Long" if sim_results["position_side"] == "long" else "Short",
+            "pnl_after_fees_usd": final_step.get("cumulative_profit", 0.0),
+            "collateral": sim_results.get("collateral", 1000.0),
+            "value": value,
+            "size": value,  # Now 'size' represents the dollar value of the holding.
+            "leverage": leverage,
+            "current_travel_percent": final_step.get("travel_percent", 0.0),
+            "heat_index": 0.0,  # Insert logic to compute heat index if needed.
+            "liquidation_distance": sim_results.get("liquidation_price", 8000.0),
+            "wallet_image": "default_wallet.png"
+        }
+        return simulated_position
+    return {}
+
 
 @simulator_bp.route('/simulation', methods=['GET', 'POST'])
 def simulator_dashboard():
@@ -108,6 +138,16 @@ def simulator_dashboard():
         }
         return render_template("simulator_dashboard.html", params=params)
 
+@simulator_bp.route('/load_current_positions', methods=['GET'])
+def load_current_positions():
+    try:
+        dl = DataLocker.get_instance()
+        positions = dl.get_positions()
+        return jsonify({"positions": positions})
+    except Exception as e:
+        logger.error("Error loading current positions: %s", e, exc_info=True)
+        return jsonify({"error": str(e)}), 500
+
 @simulator_bp.route('/compare', methods=['GET', 'POST'])
 def compare_simulation():
     """
@@ -131,7 +171,7 @@ def compare_simulation():
         "position_side": "long"
     }
 
-    # If POSTed form data is available, override defaults.
+    # Override defaults with POSTed form data, if available.
     if request.method == "POST":
         try:
             baseline_params["entry_price"] = float(request.form.get("entry_price", baseline_params["entry_price"]))
@@ -210,12 +250,16 @@ def compare_simulation():
     if historical_chart:
         chart_data["real"] = historical_chart
 
+    # Generate simulated position summary from baseline simulation.
+    simulated_position = generate_simulated_position(baseline_results)
+    simulated_positions = [simulated_position]
+
     return render_template(
         "compare.html",
         chart_data=chart_data,
         baseline_compare=baseline_chart,
         tweaked_compare=tweaked_chart,
-        simulated_positions=[],  # Populate as needed.
+        simulated_positions=simulated_positions,
         real_positions=historical_positions,
         timeframe=24,  # Example timeframe; adjust as needed.
         now=datetime.now()

@@ -216,6 +216,16 @@
         "sms": true,
         "email": true
       }
+    },
+    "average_daily_swing": {
+      "BTC": 6.1,
+      "ETH": 8.0,
+      "SOL": 13.0
+    },
+    "one_day_blast_radius": {
+      "BTC": 17.6,
+      "ETH": 18.0,
+      "SOL": 23.0
     }
   },
   "notification_config": {

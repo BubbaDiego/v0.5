@@ -2,12 +2,60 @@
 
 {% block content %}
 <div class="container-fluid" style="background: url('{{ url_for('static', filename='images/alert_wall.jpg') }}') no-repeat center center; background-size: cover; min-height: 100vh; padding-top: 20px;">
-  <div class="card" style="margin: 20px auto; max-width: 1200px; background: rgba(255,255,255,0.9);">
-    <div class="card-header" style="background-color: #004085; color: white; display: flex; justify-content: space-between; align-items: center;">
-      <h3 class="card-title mb-0">Alert Manager Configuration</h3>
-      <button type="submit" form="alert-config-form" class="btn btn-light">Save Alert Ranges</button>
+  <form id="alert-config-form" method="POST" action="{{ url_for('alerts_bp.update_alert_config') }}">
+    <!-- New Section: Daily Swing Alert Thresholds -->
+    <div class="card" style="margin: 20px auto; max-width: 1200px; background: rgba(255,255,255,0.9);">
+      <div class="card-header" style="background-color: #004085; color: white;">
+        <h3 class="card-title mb-0">Daily Swing Alert Thresholds</h3>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered text-center" style="border: 2px solid #004085;">
+          <thead style="background-color: #004085; color: white;">
+            <tr>
+              <th>Asset</th>
+              <th>Average Daily Swing (%)</th>
+              <th>One Day Blast Radius (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>BTC</strong></td>
+              <td>
+                <input type="number" step="any" name="alert_ranges[average_daily_swing][BTC]" class="form-control" value="{{ alert_ranges.average_daily_swing.BTC }}">
+              </td>
+              <td>
+                <input type="number" step="any" name="alert_ranges[one_day_blast_radius][BTC]" class="form-control" value="{{ alert_ranges.one_day_blast_radius.BTC }}">
+              </td>
+            </tr>
+            <tr>
+              <td><strong>ETH</strong></td>
+              <td>
+                <input type="number" step="any" name="alert_ranges[average_daily_swing][ETH]" class="form-control" value="{{ alert_ranges.average_daily_swing.ETH }}">
+              </td>
+              <td>
+                <input type="number" step="any" name="alert_ranges[one_day_blast_radius][ETH]" class="form-control" value="{{ alert_ranges.one_day_blast_radius.ETH }}">
+              </td>
+            </tr>
+            <tr>
+              <td><strong>SOL</strong></td>
+              <td>
+                <input type="number" step="any" name="alert_ranges[average_daily_swing][SOL]" class="form-control" value="{{ alert_ranges.average_daily_swing.SOL }}">
+              </td>
+              <td>
+                <input type="number" step="any" name="alert_ranges[one_day_blast_radius][SOL]" class="form-control" value="{{ alert_ranges.one_day_blast_radius.SOL }}">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <form id="alert-config-form" method="POST" action="{{ url_for('alerts_bp.update_alert_config') }}">
+
+    <!-- Existing Alert Manager Configuration Section -->
+    <div class="card" style="margin: 20px auto; max-width: 1200px; background: rgba(255,255,255,0.9);">
+      <div class="card-header" style="background-color: #004085; color: white; display: flex; justify-content: space-between; align-items: center;">
+        <h3 class="card-title mb-0">Alert Manager Configuration</h3>
+        <button type="submit" class="btn btn-light">Save Alert Ranges</button>
+      </div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-bordered text-center" style="border: 2px solid #004085;">
@@ -40,7 +88,6 @@
               <tr>
                 <td><strong>{{ metric.name }}</strong></td>
                 <td>
-                  <!-- Hidden input ensures unchecked sends "false" -->
                   <input type="hidden" name="alert_ranges[{{ metric.field }}][enabled]" value="false">
                   <input type="checkbox" id="{{ metric.field }}_enabled" name="alert_ranges[{{ metric.field }}][enabled]" value="true" class="form-check-input" {% if m.enabled %}checked{% endif %}>
                 </td>
@@ -115,8 +162,8 @@
           <pre id="confirmation-output" style="margin: 0;"></pre>
         </div>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 </div>
 {% endblock content %}
 
@@ -127,7 +174,6 @@
 <script src="{{ url_for('static', filename='AdminLTE/dist/js/adminlte.js') }}"></script>
 <script>
 $(document).ready(function(){
-  // Prepopulation is now handled by server-side rendering.
   $("#alert-config-form").on("submit", function(e){
     e.preventDefault();
     var formData = $(this).serialize();
@@ -137,7 +183,6 @@ $(document).ready(function(){
         console.log("Alert config update response:", data);
         if(data.success){
           $("#confirmation-output").html(data.formatted_table);
-          // Optionally, reload the page or update fields via AJAX
         } else {
           alert("Error: " + data.error);
         }
