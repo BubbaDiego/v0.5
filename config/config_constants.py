@@ -8,7 +8,7 @@ CONFIG_PATH = os.path.join(BASE_DIR, "sonic_config.json")
 # If you want a full OS path (like c:\v0.5\static\images\space_wall.jpg)
 # but in practice, for a Flask static folder, a relative path is enough.
 
-SPACE_WALL_IMAGE = "images/space_wall.jpg"
+SPACE_WALL_IMAGE = "images/space_wall2.jpg"
 
 BTC_LOGO_IMAGE = "images/btc_logo.png"
 ETH_LOGO_IMAGE = "images/eth_logo.png"

@@ -3,13 +3,27 @@
 {% block title %}Blast Radius{% endblock %}
 
 {% block content %}
+<style>
+  /* Make the entire page background the space image */
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+  }
+  body {
+    background: url('{{ url_for("static", filename="images/space_wall.jpg") }}')
+                center center no-repeat fixed;
+    background-size: cover;
+  }
+</style>
+
 <div class="container" style="max-width: 800px; margin: 0 auto;">
   <h2>Blast Radius Overview</h2>
   <p>Below is the visualization of blast radius data for your assets.</p>
 
   {#
-    The main container for the three bullseye canvases.
-    Using an 800x800 container with the SPACE_WALL_IMAGE as the background.
+    We removed the background from this container so you can see space behind it.
+    If you want a slight color behind your content, add a background-color here.
   #}
   <div id="combined-bullseye-container"
        style="
@@ -17,14 +31,7 @@
          width: 800px;
          height: 800px;
          margin: 0 auto;
-         background: url('{{ url_for('static', filename='images/SPACE_WALL_IMAGE.png') }}')
-                     center center no-repeat;
-         background-size: cover;
        ">
-    {#
-      Each canvas is 400x400.
-      Their exact positions (left/top) can be tweaked to get the perfect layout.
-    #}
     <canvas id="blastCanvasBTC" class="bullseye"
             style="position: absolute; left: 0; top: 0;"></canvas>
     <canvas id="blastCanvasETH" class="bullseye"
@@ -46,9 +53,7 @@
    * @param {number} innerPercent - Daily average percentage (inner circle radius).
    * @param {number} outerPercent - Blast radius percentage (middle circle radius).
    * @param {number} extendedPercent - Extended range percentage (outer circle radius).
-   * @param {Array} positions - Array of objects representing positions, each with:
-   *                            'liquidDistance' (in %), 'positionType' (e.g. "L"),
-   *                            'travelPercent' (e.g. -76), and optional 'color'.
+   * @param {Array} positions - Array of objects representing positions.
    * @param {number} scaleFactor - Pixels per 1% (e.g. 8).
    */
   function drawBullseye(canvas, asset, innerPercent, outerPercent, extendedPercent, positions, scaleFactor) {
