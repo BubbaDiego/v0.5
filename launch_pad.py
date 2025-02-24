@@ -48,7 +48,7 @@ from dashboard.dashboard_bp import dashboard_bp  # Dashboard-specific routes and
 from portfolio.portfolio_bp import portfolio_bp
 
 # *** NEW: Import the ChatGPT blueprint ***
-from chat_gpt.chat_gpt_bp import chat_gpt_bp
+#from chat_gpt.chat_gpt_bp import chat_gpt_bp
 
 # *** NEW: Import the Simulator Dashboard blueprint ***
 from simulator.simulator_bp import simulator_bp as simulator_bp
@@ -83,7 +83,7 @@ app.register_blueprint(dashboard_bp)  # Dashboard-specific routes and API endpoi
 app.register_blueprint(portfolio_bp, url_prefix="/portfolio")
 
 # *** NEW: Register the ChatGPT blueprint ***
-app.register_blueprint(chat_gpt_bp)
+#app.register_blueprint(chat_gpt_bp)
 
 # *** NEW: Register the Simulator Dashboard blueprint ***
 app.register_blueprint(simulator_bp, url_prefix="/simulator")
