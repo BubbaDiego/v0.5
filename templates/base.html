@@ -22,29 +22,29 @@
 
     {% block extra_styles %}{% endblock %}
 
-    <!-- CSS Variables for Primary, Secondary, and Text Colors -->
+    <!-- CSS Variables for Primary, Secondary, and Text Colors using theme_config -->
     <style>
       :root {
-        --primary-color: {% if theme.get('primary') and theme.primary.get('image') %}url('{{ url_for('static', filename=theme.primary.image) }}'){% else %}{{ theme.get('primary', {}).get('color', '#581845') }}{% endif %};
-        --secondary-color: {% if theme.get('secondary') and theme.secondary.get('image') %}url('{{ url_for('static', filename=theme.secondary.image) }}'){% else %}{{ theme.get('secondary', {}).get('color', '#FFC300') }}{% endif %};
-        --text-color: {{ theme.get('text', {}).get('color', '#FFFFFF') }};
+        --primary-color: {% if theme.get('profiles') and theme.profiles.get(theme.selected_profile) and theme.profiles[theme.selected_profile].primary.image %}url('{{ url_for('static', filename=theme.profiles[theme.selected_profile].primary.image) }}'){% else %}{{ theme.get('profiles', {}).get(theme.selected_profile, {}).get('primary', {}).get('color', '#581845') }}{% endif %};
+        --secondary-color: {% if theme.get('profiles') and theme.profiles.get(theme.selected_profile) and theme.profiles[theme.selected_profile].secondary.image %}url('{{ url_for('static', filename=theme.profiles[theme.selected_profile].secondary.image) }}'){% else %}{{ theme.get('profiles', {}).get(theme.selected_profile, {}).get('secondary', {}).get('color', '#FFC300') }}{% endif %};
+        --text-color: {{ theme.get('profiles', {}).get(theme.selected_profile, {}).get('text', {}).get('color', '#FFFFFF') }};
       }
     </style>
   </head>
   <body class="layout-fixed sidebar-expand-lg sidebar-mini sidebar-collapse" style="
-    {% if theme.get('wallpaper') and theme.wallpaper.get('image') %}
-      background-image: url('{{ url_for('static', filename=theme.wallpaper.image) }}');
+    {% if theme.get('profiles') and theme.profiles.get(theme.selected_profile) and theme.profiles[theme.selected_profile].wallpaper.image %}
+      background-image: url('{{ url_for('static', filename=theme.profiles[theme.selected_profile].wallpaper.image) }}');
     {% else %}
-      background-color: {{ theme.get('wallpaper', {}).get('color', '#900C3F') }};
+      background-color: {{ theme.get('profiles', {}).get(theme.selected_profile, {}).get('wallpaper', {}).get('color', '#900C3F') }};
     {% endif %}
     ">
     <div class="app-wrapper">
       <!-- Header / Title Bar -->
       <nav class="app-header navbar navbar-expand" style="
-        {% if theme.get('title_bar') and theme.title_bar.get('image') %}
-          background-image: url('{{ url_for('static', filename=theme.title_bar.image) }}');
+        {% if theme.get('profiles') and theme.profiles.get(theme.selected_profile) and theme.profiles[theme.selected_profile].title_bar.image %}
+          background-image: url('{{ url_for('static', filename=theme.profiles[theme.selected_profile].title_bar.image) }}');
         {% else %}
-          background-color: {{ theme.get('title_bar', {}).get('color', '#FF5733') }};
+          background-color: {{ theme.get('profiles', {}).get(theme.selected_profile, {}).get('title_bar', {}).get('color', '#FF5733') }};
         {% endif %}
         ">
         <div class="container-fluid">
@@ -105,10 +105,10 @@
 
       <!-- Sidebar -->
       <aside class="app-sidebar shadow" style="
-        {% if theme.get('sidebar') and theme.sidebar.get('image') %}
-          background-image: url('{{ url_for('static', filename=theme.sidebar.image) }}');
+        {% if theme.get('profiles') and theme.profiles.get(theme.selected_profile) and theme.profiles[theme.selected_profile].side_bar.image %}
+          background-image: url('{{ url_for('static', filename=theme.profiles[theme.selected_profile].side_bar.image) }}');
         {% else %}
-          background-color: {{ theme.get('sidebar', {}).get('color', '#C70039') }};
+          background-color: {{ theme.get('profiles', {}).get(theme.selected_profile, {}).get('side_bar', {}).get('color', '#C70039') }};
         {% endif %}
         ">
         <div class="sidebar-brand">
@@ -194,6 +194,13 @@
                   <p>ChatGPT</p>
                 </a>
               </li>
+              <!-- New Blast Radius Menu Item -->
+              <li class="nav-item">
+                <a href="{{ url_for('positions.blast_radius') }}" class="nav-link">
+                  <i class="nav-icon bi bi-lightning-charge-fill"></i>
+                  <p>Blast Radius</p>
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
@@ -229,7 +236,6 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
-    <!-- Global Theme Script with Debug Logging -->
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         console.log("Global Theme Script: DOMContentLoaded fired.");
@@ -263,12 +269,7 @@
         });
       });
     </script>
-    {% block extra_scripts %}
-    <script>
-      // Set chartData with a safe default if chart_data is undefined.
-      var chartData = {{ chart_data | default({'simulated': [], 'real': []}) | tojson }};
-    </script>
-    {% endblock %}
+    {% block extra_scripts %}{% endblock %}
     {% if request.endpoint == 'index' %}
     <script>
       window.location.href = "{{ url_for('dashboard.dashboard') }}";

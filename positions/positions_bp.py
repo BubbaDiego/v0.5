@@ -267,6 +267,17 @@ def positions_table():
         logger.error(f"Error in positions_table: {e}", exc_info=True)
         return jsonify({"error": str(e)}), 500
 
+@positions_bp.route("/blast_radius", methods=["GET"])
+def blast_radius():
+    try:
+        # Optionally, you can fetch the data you need from PositionService here
+        # For now, we simply render the template.
+        return render_template("blast_radius.html")
+    except Exception as e:
+        logger.error(f"Error rendering blast_radius page: {e}", exc_info=True)
+        return jsonify({"error": str(e)}), 500
+
+
 
 @positions_bp.route("/edit/<position_id>", methods=["POST"])
 def edit_position(position_id):
