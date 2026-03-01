@@ -769,10 +769,26 @@
             walletImg.className = "wallet-icon";
             walletImg.src = `/static/images/${g.wallet.toLowerCase()}.jpg`;
             walletImg.alt = g.wallet;
+            walletImg.onerror = function() {
+              this.onerror = null;
+              this.style.display = "none";
+              const initials = document.createElement("span");
+              initials.textContent = g.wallet.substring(0, 2).toUpperCase();
+              initials.style.cssText = "display:inline-flex;width:37.5px;height:37.5px;border-radius:50%;background:#6c757d;color:#fff;font-size:13px;font-weight:bold;align-items:center;justify-content:center;border:1px solid #ccc;margin-bottom:5px;";
+              this.parentNode.insertBefore(initials, this.nextSibling);
+            };
             const assetImg = document.createElement("img");
             assetImg.className = "asset-icon2";
             assetImg.src = `/static/images/${g.asset.toLowerCase()}_logo.png`;
             assetImg.alt = g.asset;
+            assetImg.onerror = function() {
+              this.onerror = null;
+              this.style.display = "none";
+              const initials = document.createElement("span");
+              initials.textContent = g.asset.substring(0, 3);
+              initials.style.cssText = "display:inline-flex;width:30px;height:30px;border-radius:50%;background:#495057;color:#fff;font-size:11px;font-weight:bold;align-items:center;justify-content:center;border:1px solid #ccc;";
+              this.parentNode.insertBefore(initials, this.nextSibling);
+            };
             col.appendChild(walletImg);
             col.appendChild(assetImg);
             labelsContainer.appendChild(col);

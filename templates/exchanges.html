@@ -51,7 +51,11 @@ input("Press Enter to exit...")
         {% for broker in brokers %}
         <tr>
           <td>
-            <img src="{{ broker.image_path }}" alt="{{ broker.name }}" style="width:40px; height:40px;">
+            <img src="{{ broker.image_path }}" alt="{{ broker.name }}" style="width:40px; height:40px; border-radius:50%;"
+                 onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
+            <span style="display:none;width:40px;height:40px;border-radius:50%;background:#6c757d;color:#fff;font-size:14px;font-weight:bold;align-items:center;justify-content:center;">
+              {{ broker.name[:2]|upper }}
+            </span>
           </td>
           <td>{{ broker.name }}</td>
           <td>

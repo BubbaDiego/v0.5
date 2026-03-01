@@ -63,10 +63,12 @@ def _convert_iso_to_pst(iso_str):
 def list_positions():
     try:
         positions = PositionService.get_all_positions(DB_PATH)
+        _resolve_wallet_images(positions)
         dl = DataLocker.get_instance(DB_PATH)
         for pos in positions:
             wallet_name = pos.get("wallet_name")
-            pos["wallet_name"] = dl.get_wallet_by_name(wallet_name) if wallet_name else None
+            if isinstance(wallet_name, str):
+                pos["wallet_name"] = dl.get_wallet_by_name(wallet_name) if wallet_name else None
 
         config_data = load_config(CONFIG_PATH)
         alert_dict = config_data.get("alert_ranges", {})
@@ -256,11 +258,32 @@ def position_trends():
         return jsonify({"error": str(e)}), 500
 
 
+def _resolve_wallet_images(positions):
+    """Attach a resolved wallet_image URL to each position dict."""
+    dl = DataLocker.get_instance(DB_PATH)
+    cache = {}
+    for pos in positions:
+        wname = pos.get("wallet_name")
+        if isinstance(wname, dict):
+            wname = wname.get("name", "")
+        wname = wname or ""
+        if wname and wname not in cache:
+            w = dl.get_wallet_by_name(wname)
+            cache[wname] = w
+        w = cache.get(wname)
+        if w and w.get("image_path"):
+            img = w["image_path"].replace("\\", "/").rsplit("/", 1)[-1]
+            pos["wallet_image"] = f"/static/images/{img}"
+        elif not pos.get("wallet_image"):
+            pos["wallet_image"] = ""
+
+
 @positions_bp.route("/table", methods=["GET"])
 def positions_table():
     try:
         dl = DataLocker.get_instance(DB_PATH)
         positions = PositionService.get_all_positions(DB_PATH)
+        _resolve_wallet_images(positions)
         totals = CalcServices().calculate_totals(positions)
         return render_template("positions_table.html", positions=positions, totals=totals)
     except Exception as e:
@@ -361,9 +384,11 @@ def positions_mobile():
         dl = DataLocker.get_instance(DB_PATH)
         calc = CalcServices()
         positions = PositionService.get_all_positions(DB_PATH)
+        _resolve_wallet_images(positions)
         for pos in positions:
             wallet_name = pos.get("wallet_name")
-            pos["wallet_name"] = dl.get_wallet_by_name(wallet_name) if wallet_name else None
+            if isinstance(wallet_name, str):
+                pos["wallet_name"] = dl.get_wallet_by_name(wallet_name) if wallet_name else None
         config_data = load_config(CONFIG_PATH)
         alert_dict = config_data.get("alert_ranges", {})
 
@@ -696,6 +721,7 @@ def save_theme():
 def show_top_positions():
     try:
         all_positions = PositionService.get_all_positions(DB_PATH)
+        _resolve_wallet_images(all_positions)
         # Filter positions with a valid current_travel_percent
         valid_positions = [pos for pos in all_positions if pos.get("current_travel_percent") is not None]
 
@@ -726,6 +752,7 @@ def top_bottom_positions():
     try:
         # Retrieve and enrich all positions
         positions = PositionService.get_all_positions(DB_PATH)
+        _resolve_wallet_images(positions)
 
         # Filter out any positions without a travel percent value
         valid_positions = [p for p in positions if p.get("travel_percent") is not None]

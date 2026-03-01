@@ -166,18 +166,17 @@
               </td>
               <!-- Wallet Column -->
               <td>
-                {% set wallet_file = None %}
                 {% if pos.wallet_image %}
-                  {% set wallet_file = pos.wallet_image %}
+                  <img src="{{ pos.wallet_image }}" alt="Wallet"
+                       class="wallet-img"
+                       onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
+                  <span class="wallet-initials" style="display:none;width:30px;height:30px;border-radius:50%;background:#6c757d;color:#fff;font-size:12px;font-weight:bold;align-items:center;justify-content:center;vertical-align:middle;">
+                    {{ (pos.wallet_name if pos.wallet_name is string else (pos.wallet_name.name if pos.wallet_name is mapping else '?'))[:2]|upper }}
+                  </span>
                 {% elif pos.wallet_name %}
-                  {% if pos.wallet_name is mapping %}
-                    {% set wallet_file = pos.wallet_name.image_path if pos.wallet_name.image_path else pos.wallet_name.name %}
-                  {% else %}
-                    {% set wallet_file = pos.wallet_name %}
-                  {% endif %}
-                {% endif %}
-                {% if wallet_file %}
-                  <img src="{{ url_for('static', filename='images/' ~ wallet_file) }}" alt="Wallet Image" class="wallet-img">
+                  <span class="wallet-initials" style="display:inline-flex;width:30px;height:30px;border-radius:50%;background:#6c757d;color:#fff;font-size:12px;font-weight:bold;align-items:center;justify-content:center;vertical-align:middle;">
+                    {{ (pos.wallet_name if pos.wallet_name is string else (pos.wallet_name.name if pos.wallet_name is mapping else '?'))[:2]|upper }}
+                  </span>
                 {% else %}
                   <span class="wallet-name">Unknown</span>
                 {% endif %}

@@ -131,6 +131,24 @@ def dashboard():
     try:
         # Retrieve all positions.
         all_positions = PositionService.get_all_positions(DB_PATH) or []
+
+        # Resolve wallet images for each position so templates can render them.
+        dl = DataLocker.get_instance(DB_PATH)
+        wallet_cache = {}
+        for pos in all_positions:
+            wname = pos.get("wallet_name") or ""
+            if wname and wname not in wallet_cache:
+                w = dl.get_wallet_by_name(wname)
+                wallet_cache[wname] = w
+            w = wallet_cache.get(wname)
+            if w and w.get("image_path"):
+                img = w["image_path"]
+                # Strip any leading path components to get just the filename
+                img = img.replace("\\", "/").rsplit("/", 1)[-1]
+                pos["wallet_image"] = f"/static/images/{img}"
+            else:
+                pos["wallet_image"] = ""
+
         positions = all_positions  # Use all positions for positions table.
         liquidation_positions = all_positions  # Use all positions for liquidation bars.
         # Sort positions for top and bottom based on current_travel_percent (defaulting to 0 if missing)

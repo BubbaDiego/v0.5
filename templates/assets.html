@@ -195,9 +195,17 @@
               <td>{{ "{:,.2f}".format(w.balance) }}</td>
               <td>
                 {% if w.image_path %}
-                  <img src="{{ w.image_path }}" alt="wallet-image" style="width:40px; height:40px; object-fit:cover;" />
+                  {% set img_name = w.image_path.replace('\\', '/').split('/')[-1] %}
+                  <img src="{{ url_for('static', filename='images/' ~ img_name) }}" alt="wallet-image"
+                       style="width:40px; height:40px; object-fit:cover; border-radius:50%;"
+                       onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
+                  <span style="display:none;width:40px;height:40px;border-radius:50%;background:#6c757d;color:#fff;font-size:14px;font-weight:bold;align-items:center;justify-content:center;">
+                    {{ w.name[:2]|upper }}
+                  </span>
                 {% else %}
-                  N/A
+                  <span style="display:inline-flex;width:40px;height:40px;border-radius:50%;background:#6c757d;color:#fff;font-size:14px;font-weight:bold;align-items:center;justify-content:center;">
+                    {{ w.name[:2]|upper }}
+                  </span>
                 {% endif %}
               </td>
               <td>

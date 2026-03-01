@@ -157,9 +157,18 @@
                       </div>
                     </div>
                     <div class="info-box-wallet">
-                      <img src="{{ pos.wallet_image or url_for('static', filename='images/landovault.jpg') }}"
-                           alt="Wallet Logo"
-                           onerror="this.onerror=null;this.src='{{ url_for('static', filename='images/landovault.jpg') }}';">
+                      {% if pos.wallet_image %}
+                        <img src="{{ pos.wallet_image }}"
+                             alt="Wallet Logo"
+                             onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
+                        <span style="display:none;width:30px;height:30px;border-radius:50%;background:#6c757d;color:#fff;font-size:11px;font-weight:bold;align-items:center;justify-content:center;">
+                          {{ (pos.wallet_name or '?')[:2]|upper }}
+                        </span>
+                      {% else %}
+                        <span style="display:inline-flex;width:30px;height:30px;border-radius:50%;background:#6c757d;color:#fff;font-size:11px;font-weight:bold;align-items:center;justify-content:center;">
+                          {{ (pos.wallet_name or '?')[:2]|upper }}
+                        </span>
+                      {% endif %}
                     </div>
                   </div>
                 {% endfor %}

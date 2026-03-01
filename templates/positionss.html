@@ -186,22 +186,22 @@
             </td>
             <!-- Wallet Column -->
             <td>
-              {% if pos.wallet_name %}
-                {% if pos.wallet_name.image_path %}
-                  {% set wallet_image = pos.wallet_name.image_path %}
-                  {% if '\\' in wallet_image %}
-                    {% set wallet_filename = wallet_image.split('\\')[-1] %}
-                  {% elif '/' in wallet_image %}
-                    {% set wallet_filename = wallet_image.split('/')[-1] %}
-                  {% else %}
-                    {% set wallet_filename = wallet_image %}
-                  {% endif %}
-                  {% set wallet_url = url_for('static', filename='images/' ~ wallet_filename) %}
-                  <img src="{{ wallet_url }}" alt="{{ pos.wallet_name.name }}" style="width: 40px; height: 40px; vertical-align: middle; margin-right: 5px;" />
-                {% endif %}
-                <span class="wallet-name">{{ pos.wallet_name.name }}</span>
+              {% if pos.wallet_image %}
+                <img src="{{ pos.wallet_image }}" alt="Wallet"
+                     style="width: 40px; height: 40px; vertical-align: middle; margin-right: 5px; border-radius: 50%;"
+                     onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
+                <span style="display:none;width:40px;height:40px;border-radius:50%;background:#6c757d;color:#fff;font-size:14px;font-weight:bold;align-items:center;justify-content:center;vertical-align:middle;margin-right:5px;">
+                  {{ ((pos.wallet_name.name if pos.wallet_name is mapping else pos.wallet_name) or '?')[:2]|upper }}
+                </span>
+              {% elif pos.wallet_name %}
+                <span style="display:inline-flex;width:40px;height:40px;border-radius:50%;background:#6c757d;color:#fff;font-size:14px;font-weight:bold;align-items:center;justify-content:center;vertical-align:middle;margin-right:5px;">
+                  {{ (pos.wallet_name.name if pos.wallet_name is mapping else pos.wallet_name)[:2]|upper }}
+                </span>
               {% else %}
                 N/A
+              {% endif %}
+              {% if pos.wallet_name %}
+                <span class="wallet-name">{{ pos.wallet_name.name if pos.wallet_name is mapping else pos.wallet_name }}</span>
               {% endif %}
             </td>
           </tr>
