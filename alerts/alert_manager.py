@@ -313,10 +313,11 @@ class AlertManager:
             pass
 
 # Create a global AlertManager instance for use in other modules.
+from config.config_constants import DB_PATH as _DB_PATH, CONFIG_PATH as _CONFIG_PATH
 manager = AlertManager(
-    db_path=os.path.abspath("mother_brain.db"),
+    db_path=_DB_PATH,
     poll_interval=60,
-    config_path="sonic_config.json"
+    config_path=_CONFIG_PATH
 )
 
 if __name__ == "__main__":

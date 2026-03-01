@@ -70,8 +70,9 @@ class SonicConfigManager:
 # -------------------------------
 alerts_bp = Blueprint('alerts_bp', __name__, url_prefix='/alerts')
 
-# Set the configuration file path (adjust as needed)
-CONFIG_PATH = os.path.join(os.getcwd(), "sonic_config.json")
+# Use the centralized CONFIG_PATH so Railway volume is honoured
+from config.config_constants import CONFIG_PATH as _CONST_CONFIG_PATH
+CONFIG_PATH = _CONST_CONFIG_PATH
 config_mgr = SonicConfigManager(CONFIG_PATH)
 
 

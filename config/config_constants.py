@@ -2,8 +2,18 @@ import os
 
 # Go one level up from the current file (assuming this file is in the 'config' folder)
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-DB_PATH = os.path.join(BASE_DIR, "data", "mother_brain.db")
-CONFIG_PATH = os.path.join(BASE_DIR, "sonic_config.json")
+
+# On Railway the persistent volume is mounted at /data.
+# Use it when available so DB and config survive redeploys.
+_RAILWAY_VOLUME = "/data"
+_USE_VOLUME = os.path.isdir(_RAILWAY_VOLUME) and os.environ.get("RAILWAY_ENVIRONMENT")
+
+if _USE_VOLUME:
+    DB_PATH = os.path.join(_RAILWAY_VOLUME, "mother_brain.db")
+    CONFIG_PATH = os.path.join(_RAILWAY_VOLUME, "sonic_config.json")
+else:
+    DB_PATH = os.path.join(BASE_DIR, "data", "mother_brain.db")
+    CONFIG_PATH = os.path.join(BASE_DIR, "sonic_config.json")
 
 # If you want a full OS path (like c:\v0.5\static\images\space_wall.jpg)
 # but in practice, for a Flask static folder, a relative path is enough.

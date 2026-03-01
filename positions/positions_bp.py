@@ -695,11 +695,11 @@ def update_jupiter():
 @positions_bp.route("/update_alert_config", methods=["POST"])
 def update_alert_config():
     try:
-        config = load_config("sonic_config.json")
+        config = load_config(CONFIG_PATH)
         form_data = request.form.to_dict(flat=True)
         updated_alerts = parse_nested_form(form_data)
         config["alert_ranges"] = updated_alerts
-        updated_config = update_config(config, "sonic_config.json")
+        updated_config = update_config(config, CONFIG_PATH)
         manager.reload_config()
         return jsonify({"success": True})
     except Exception as e:
