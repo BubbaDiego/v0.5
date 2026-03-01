@@ -199,9 +199,7 @@ def config():
 
 @alerts_bp.route('/update_config', methods=['POST'], endpoint="update_alert_config")
 def update_alert_config():
-    """
-    Update the alert configuration from the form data.
-    """
+    logger.debug("Entered update_alert_config endpoint")
     try:
         # Use flat=False so that if multiple values exist, we can pick the checkbox's value.
         flat_form = request.form.to_dict(flat=False)
@@ -215,11 +213,13 @@ def update_alert_config():
         logger.debug("Parsed Nested Form Data (converted):\n%s", json.dumps(nested_update, indent=2))
 
         config_mgr.update_alert_config(nested_update)
+        logger.debug("update_alert_config() called successfully with merged data.")
 
         updated_config = config_mgr.load_config()
         logger.debug("New Config Loaded After Update:\n%s", json.dumps(updated_config, indent=2))
 
         formatted_table = format_alert_config_table(updated_config.get("alert_ranges", {}))
+        logger.debug("Formatted HTML Table for Alert Config:\n%s", formatted_table)
         return jsonify({"success": True, "formatted_table": formatted_table})
     except Exception as e:
         logger.error("Error updating alert config: %s", str(e))

@@ -60,6 +60,27 @@ class PositionSimulator:
         self.rebalance_count = 0
         self.simulation_log = []
 
+    def generate_simulated_position(sim_results):
+        # Use the final simulation log entry as a summary of the simulated position.
+        if sim_results.get("simulation_log"):
+            final_step = sim_results["simulation_log"][-1]
+            simulated_position = {
+                "asset_type": "BTC",  # You can adjust this based on your input
+                "position_type": "Long" if sim_results["position_side"] == "long" else "Short",
+                "pnl_after_fees_usd": final_step.get("cumulative_profit", 0.0),
+                "collateral": sim_results.get("collateral", 1000.0),
+                "value": final_step.get("price", 0.0) * sim_results.get("position_size", 1.0),
+                "size": sim_results.get("position_size", 1.0),
+                "leverage": (final_step.get("price", 0.0) * sim_results.get("position_size", 1.0)) / sim_results.get(
+                    "collateral", 1000.0),
+                "current_travel_percent": final_step.get("travel_percent", 0.0),
+                "heat_index": 0.0,  # Insert computation if needed
+                "liquidation_distance": sim_results.get("liquidation_price", 8000),
+                "wallet_image": "default_wallet.png"
+            }
+            return simulated_position
+        return {}
+
     def _simulate_price_path(self, current_price: float, drift: float, volatility: float, dt: float) -> float:
         """
         Generate the next price using geometric Brownian motion.

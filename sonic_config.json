@@ -216,6 +216,16 @@
         "sms": true,
         "email": true
       }
+    },
+    "average_daily_swing": {
+      "BTC": 6.1,
+      "ETH": 8.0,
+      "SOL": 13.0
+    },
+    "one_day_blast_radius": {
+      "BTC": 17.6,
+      "ETH": 18.0,
+      "SOL": 23.0
     }
   },
   "notification_config": {
@@ -234,7 +244,7 @@
   "alert_cooldown_seconds": 6000,
   "call_refractory_period": 1,
   "theme_config": {
-    "selected_profile": "profile4",
+    "selected_profile": "profile3",
     "profiles": {
       "profile1": {
         "title_bar": {
